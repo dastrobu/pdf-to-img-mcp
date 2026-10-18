@@ -22,7 +22,7 @@ go mod verify
 
 # Build CLI
 echo "🔨 Building CLI..."
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 echo "✓ CLI built: ./pdf2img"
 
 # Build MCP server (optional)
@@ -39,8 +39,8 @@ echo "🧪 Testing installation..."
 # Optional: Install globally
 if [ "$1" = "--global" ] || [ "$2" = "--global" ]; then
     echo "🌐 Installing globally..."
-    go install ./cmd/pdf2img
-    echo "✓ Installed globally as 'pdf2img'"
+    go install .
+    echo "✓ Installed globally as 'mcp-go-pdf-to-img' (build with an explicit name via: go build -o pdf2img .)"
 
     if [ "$1" = "--with-mcp" ] || [ "$2" = "--with-mcp" ]; then
         go install ./cmd/mcp-server

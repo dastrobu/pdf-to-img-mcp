@@ -2,7 +2,7 @@
 
 # Variables
 BINARY_NAME=pdf2img
-BINARY_PATH=./cmd/pdf2img
+BINARY_PATH=.
 GO=go
 LDFLAGS=-ldflags "-s -w"
 

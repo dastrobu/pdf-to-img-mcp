@@ -33,7 +33,7 @@ Closes #(issue number)
 
 ```bash
 # Example test commands
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 go test ./test/security -v
 ./pdf2img -i example.pdf -o output
 ```

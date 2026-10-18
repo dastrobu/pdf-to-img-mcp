@@ -25,7 +25,7 @@ call go mod verify
 
 REM Build CLI
 echo 🔨 Building CLI...
-call go build -o pdf2img.exe .\cmd\pdf2img
+call go build -o pdf2img.exe .
 if %ERRORLEVEL% NEQ 0 (
     echo ❌ Failed to build CLI
     exit /b 1
@@ -55,8 +55,8 @@ if %ERRORLEVEL% NEQ 0 (
 REM Optional: Install globally
 if "%1"=="--global" (
     echo 🌐 Installing globally...
-    call go install .\cmd\pdf2img
-    echo ✓ Installed globally as 'pdf2img'
+    call go install .
+    echo ✓ Installed globally as 'mcp-go-pdf-to-img' (build with an explicit name via: go build -o pdf2img .)
 
     if "%2"=="--with-mcp" (
         call go install .\cmd\mcp-server

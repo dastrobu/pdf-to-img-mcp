@@ -21,7 +21,7 @@ go mod verify
 # Construir el binario
 make build
 # o
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 ```
 
 ## Estructura del código
@@ -33,8 +33,8 @@ Módulo principal que encapsula la lógica de conversión PDF:
 - `ConvertResult`: Resultado de la conversión
 - Funciones helper para validación, rango de páginas, guardado de imágenes
 
-### `cmd/pdf2img/main.go`
-Aplicación CLI usando Cobra:
+### `main.go` / `split.go`
+Aplicación CLI usando Cobra (paquete `main` en la raíz, instalable con `go install .`):
 - Comando principal `convert` (por defecto)
 - Subcomando `info` para obtener metadatos del PDF
 - Manejo de flags y opciones de línea de comandos
@@ -63,7 +63,7 @@ make build
 make build-dev
 
 # Compilación específica del CLI
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 
 # Compilación específica del MCP server
 go build -o mcp-server ./cmd/mcp-server
@@ -180,10 +180,10 @@ log.Printf("Debug: %+v", variable)
 ### Profiling de Go
 ```bash
 # CPU profiling
-go run -cpuprofile=cpu.prof ./cmd/pdf2img/main.go
+go run -cpuprofile=cpu.prof .
 
 # Memory profiling
-go run -memprofile=mem.prof ./cmd/pdf2img/main.go
+go run -memprofile=mem.prof .
 
 # Análisis
 go tool pprof cpu.prof

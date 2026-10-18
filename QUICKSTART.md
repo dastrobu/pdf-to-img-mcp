@@ -35,7 +35,7 @@ pdf2img.exe -i tu-documento.pdf -o .\output
 ```bash
 # Requiere Go 1.21+
 go mod download
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 
 # Usar:
 ./pdf2img -i documento.pdf -o ./output

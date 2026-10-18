@@ -18,7 +18,7 @@ A complete tool in Go to render PDF pages as PNG or JPG images. Includes both a 
 
 ### Prerequisites
 
-- **Go 1.26+**
+- **Go 1.27+**
 - **Note**: No external PDFium required, everything is embedded in the binary
 
 ### From source code
@@ -27,14 +27,16 @@ A complete tool in Go to render PDF pages as PNG or JPG images. Includes both a 
 git clone <repository-url>
 cd pdf2img
 go mod download
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 ```
 
 ### Global installation
 
 ```bash
-go install github.com/scopweb/mcp-go-pdf-to-img/cmd/pdf2img@latest
+go install github.com/scopweb/mcp-go-pdf-to-img@latest
 ```
+
+**Note:** `go install .` (or the module install above) produces a binary named after the module (`mcp-go-pdf-to-img`), since the main package now lives in the repository root. To get a `pdf2img` binary, build with an explicit name: `go build -o pdf2img .`
 
 ## Usage
 
@@ -262,27 +264,28 @@ curl -X POST http://localhost:8080/api/v1/pdf/info -F "file=@document.pdf"
 
 ```
 pdf2img/
+├── main.go                 # CLI application (root main package — `go install .`)
+├── split.go                # `split` subcommand
 ├── cmd/
-│   ├── pdf2img/
-│   │   └── main.go          # CLI application
 │   ├── mcp-server/
-│   │   └── main.go          # MCP server
-│   └── server/
-│       └── main.go          # HTTP REST API server
+│    │    └── main.go           # MCP server
+│    └── server/
+│        ├── main.go            # HTTP REST API server
+│        └── handlers.go        # HTTP handlers
 ├── internal/
-│   ├── config/
-│   │   └── config.go        # Server configuration
-│   └── logging/
-│       └── logger.go        # Logging utilities
+│    ├── config/
+│    │    └── config.go         # Server configuration
+│    └── logging/
+│        └── logger.go         # Logging utilities
 ├── mcp/
-│   └── server.go            # MCP server implementation
+│    └── server.go             # MCP server implementation
 ├── pkg/
-│   ├── converter/
-│   │   └── converter.go      # PDF to image conversion
-│   └── splitter/
-│       └── splitter.go       # PDF page splitting
-├── go.mod                   # Dependencies
-└── README.md               # This file
+│    ├── converter/
+│    │    └── converter.go       # PDF to image conversion
+│    └── splitter/
+│        └── splitter.go        # PDF page splitting
+├── go.mod                    # Dependencies
+└── README.md                # This file
 ```
 
 ## Dependencies

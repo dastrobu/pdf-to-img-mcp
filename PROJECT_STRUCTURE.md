@@ -4,37 +4,47 @@
 
 ```
 pdf2img/
-├── cmd/                          # Aplicaciones ejecutables
-│   ├── pdf2img/                  # CLI principal
-│   │   └── main.go              # Aplicación de línea de comandos
-│   └── mcp-server/               # Servidor MCP
-│       └── main.go              # Servidor HTTP/stdio
-├── mcp/                          # Implementación del protocolo MCP
-│   ├── server.go                # Servidor MCP
-│   └── example_server.go        # Ejemplo de uso
-├── pkg/                          # Paquetes reutilizables
-│   └── converter/               # Lógica de conversión
-│       ├── converter.go         # Logica principal
-│       └── converter_test.go    # Pruebas unitarias
-├── go.mod                        # Definición de módulo Go
-├── go.sum                        # Checksums de dependencias (generado)
-├── Makefile                      # Automatización de build
-├── install.sh                    # Script de instalación (Unix)
-├── install.bat                   # Script de instalación (Windows)
-├── .gitignore                    # Archivos a ignorar en Git
-├── LICENSE                       # Licencia Apache 2.0
-├── claude_config.json            # Configuración para Claude
-├── README.md                     # Documentación principal
-├── QUICKSTART.md                 # Guía de inicio rápido
-├── EXAMPLES.md                   # Ejemplos de uso
-├── DEVELOPMENT.md                # Guía para desarrolladores
-└── PROJECT_STRUCTURE.md          # Este archivo
+├── main.go                        # Aplicación CLI (paquete main raíz — `go install .`)
+├── split.go                       # Subcomando `split`
+├── cmd/                           # Aplicaciones ejecutables adicionales
+│     ├── mcp-server/                # Servidor MCP
+│     │     └── main.go               # Servidor HTTP/stdio
+│     └── server/                    # Servidor REST HTTP
+│         ├── main.go
+│         └── handlers.go
+├── internal/                       # Paquetes internos
+│     ├── config/                  # Configuración del servidor
+│     │     └── config.go
+│     └── logging/                 # Utilidades de logging
+│         └── logger.go
+├── mcp/                           # Implementación del protocolo MCP
+│     ├── server.go                 # Servidor MCP
+│     └── example_server.go         # Ejemplo de uso
+├── pkg/                           # Paquetes reutilizables
+│     ├── converter/                # Lógica de conversión
+│     │     ├── converter.go          # Logica principal
+│     │     └── converter_test.go     # Pruebas unitarias
+│     └── splitter/                 # Extracción de páginas
+│         └── splitter.go
+├── go.mod                         # Definición de módulo Go
+├── go.sum                         # Checksums de dependencias (generado)
+├── Makefile                       # Automatización de build
+├── install.sh                     # Script de instalación (Unix)
+├── install.bat                    # Script de instalación (Windows)
+├── .gitignore                     # Archivos a ignorar en Git
+├── LICENSE                        # Licencia Apache 2.0
+├── claude_config.json             # Configuración para Claude
+├── README.md                      # Documentación principal
+├── QUICKSTART.md                  # Guía de inicio rápido
+├── EXAMPLES.md                    # Ejemplos de uso
+├── DEVELOPMENT.md                 # Guía para desarrolladores
+└── PROJECT_STRUCTURE.md           # Este archivo
 ```
 
 ## Descripción de componentes
 
-### `cmd/pdf2img/`
-**Aplicación CLI principal**
+### `main.go` / `split.go`
+**Aplicación CLI principal** (paquete `main` en la raíz, instalable con `go install .`)
 
 - Interfaz de línea de comandos para convertir PDFs
 - Usa Cobra para manejo de flags
@@ -147,7 +157,7 @@ Actualmente no requiere variables de entorno.
 
 ### Compilar CLI
 ```bash
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 ```
 
 ### Compilar MCP server
@@ -157,7 +167,7 @@ go build -o mcp-server ./cmd/mcp-server
 
 ### Compilación optimizada
 ```bash
-go build -ldflags "-s -w" -o pdf2img ./cmd/pdf2img
+go build -ldflags "-s -w" -o pdf2img .
 ```
 
 ## Testing

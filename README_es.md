@@ -26,13 +26,13 @@ Una herramienta completa en Go para renderizar páginas PDF como imágenes PNG o
 git clone <repository-url>
 cd pdf2img
 go mod download
-go build -o pdf2img ./cmd/pdf2img
+go build -o pdf2img .
 ```
 
 ### Instalación global
 
 ```bash
-go install github.com/tu-usuario/pdf2img/cmd/pdf2img@latest
+go install github.com/scopweb/mcp-go-pdf-to-img@latest
 ```
 
 ## Uso
