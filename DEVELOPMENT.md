@@ -1,112 +1,112 @@
-# Guía de Desarrollo
+# Development Guide
 
-## Configuración del entorno de desarrollo
+## Development environment setup
 
-### Requisitos
+### Requirements
 - Go 1.21+
 - Git
-- Make (opcional, pero recomendado)
+- Make (optional, but recommended)
 
-### Setup inicial
+### Initial setup
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone <repository-url>
 cd pdf2img
 
-# Descargar dependencias
+# Download dependencies
 go mod download
 go mod verify
 
-# Construir el binario
+# Build the binary
 make build
-# o
+# or
 go build -o pdf2img .
 ```
 
-## Estructura del código
+## Code structure
 
 ### `pkg/converter/converter.go`
-Módulo principal que encapsula la lógica de conversión PDF:
-- `Converter`: Estructura principal que gestiona la instancia de PDFium
-- `ConvertOptions`: Opciones para configurar la conversión
-- `ConvertResult`: Resultado de la conversión
-- Funciones helper para validación, rango de páginas, guardado de imágenes
+Main module that encapsulates the PDF conversion logic:
+- `Converter`: Main structure that manages the PDFium instance
+- `ConvertOptions`: Options to configure the conversion
+- `ConvertResult`: Result of the conversion
+- Helper functions for validation, page range, and saving images
 
 ### `main.go` / `split.go`
-Aplicación CLI usando Cobra (paquete `main` en la raíz, instalable con `go install .`):
-- Comando principal `convert` (por defecto)
-- Subcomando `info` para obtener metadatos del PDF
-- Manejo de flags y opciones de línea de comandos
-- Formateo de salida para el usuario
+CLI application using Cobra (the `main` package at the root, installable with `go install .`):
+- Main command `convert` (by default)
+- `info` subcommand to get PDF metadata
+- Flag and command-line option handling
+- Output formatting for the user
 
 ### `mcp/server.go`
-Implementación del servidor Model Context Protocol:
-- `MCPServer`: Estructura que expone herramientas MCP
-- `GetTools()`: Lista herramientas disponibles
-- `ExecuteTool()`: Ejecuta una herramienta con entrada JSON
-- Handlers para `pdf_to_images` y `pdf_info`
+Model Context Protocol server implementation:
+- `MCPServer`: Structure that exposes MCP tools
+- `GetTools()`: Lists available tools
+- `ExecuteTool()`: Executes a tool with JSON input
+- Handlers for `pdf_to_images` and `pdf_info`
 
 ### `cmd/mcp-server/main.go`
-Servidor HTTP/stdio para MCP:
-- Modo HTTP: API REST en localhost
-- Modo stdio: Para integración con Claude
+HTTP/stdio server for MCP:
+- HTTP mode: REST API on localhost
+- stdio mode: For integration with any MCP client
 
-## Compilación y pruebas
+## Compilation and testing
 
-### Compilar
+### Compile
 ```bash
-# Compilación optimizada (release)
+# Optimized compilation (release)
 make build
 
-# Compilación con símbolos de debug
+# Compilation with debug symbols
 make build-dev
 
-# Compilación específica del CLI
+# CLI-specific compilation
 go build -o pdf2img .
 
-# Compilación específica del MCP server
+# MCP server-specific compilation
 go build -o mcp-server ./cmd/mcp-server
 ```
 
-### Pruebas
+### Tests
 ```bash
-# Ejecutar todas las pruebas
+# Run all tests
 make test
-# o
+# or
 go test -v ./...
 
-# Pruebas de un paquete específico
+# Tests for a specific package
 go test -v ./pkg/converter
 ```
 
-### Linting y formato
+### Linting and formatting
 ```bash
-# Formatear código
+# Format code
 make fmt
 
-# Lint (requiere golangci-lint instalado)
+# Lint (requires golangci-lint installed)
 make lint
 ```
 
-## Trabajar con go-pdfium
+## Working with go-pdfium
 
-### Inicialización
+### Initialization
 ```go
 conv, err := converter.New()
 defer conv.Close()
 ```
 
-### Obtener información del PDF
+### Get PDF information
 ```go
-info, err := conv.GetPDFInfo("documento.pdf")
+info, err := conv.GetPDFInfo("document.pdf")
 // info["pages"], info["width"], info["height"], etc.
 ```
 
-### Convertir PDF
+### Convert PDF
 ```go
 result, err := conv.Convert(&converter.ConvertOptions{
-    InputPath: "documento.pdf",
+    InputPath: "document.pdf",
     OutputDir: "./output",
     Format:    "png",
     DPI:       150,
@@ -114,48 +114,48 @@ result, err := conv.Convert(&converter.ConvertOptions{
 })
 ```
 
-## Extensiones futuras
+## Future extensions
 
-### 1. Soporte para PDF con contraseña
+### 1. Support for password-protected PDFs
 ```go
-// En converter.go
+// In converter.go
 doc, err := c.pdfium.OpenFile(pdfPath, &requests.OpenFile{
-    Password: "tu-contraseña",
+    Password: "your-password",
 })
 ```
 
-### 2. Procesamiento paralelo
+### 2. Parallel processing
 ```go
-// Renderizar múltiples páginas concurrentemente
+// Render multiple pages concurrently
 var wg sync.WaitGroup
 for pageNum := startPage; pageNum <= endPage; pageNum++ {
     wg.Add(1)
     go func(p int) {
         defer wg.Done()
-        // Renderizar página
+        // Render page
     }(pageNum)
 }
 wg.Wait()
 ```
 
-### 3. API REST completa
-Extender `cmd/mcp-server/main.go` con más endpoints:
+### 3. Complete REST API
+Extend `cmd/mcp-server/main.go` with more endpoints:
 ```go
 http.HandleFunc("/api/v1/convert", handleConvert)
 http.HandleFunc("/api/v1/info", handleInfo)
 http.HandleFunc("/api/v1/status", handleStatus)
 ```
 
-### 4. OCR de imágenes
-Integrar con `github.com/otiai10/gosseract`:
+### 4. OCR of images
+Integrate with `github.com/otiai10/gosseract`:
 ```go
 client, _ := gosseract.NewClient()
 defer client.Close()
 text, _ := client.Text()
 ```
 
-### 5. Caché de renderizado
-Almacenar imágenes generadas para evitar re-renderizar:
+### 5. Rendering cache
+Store generated images to avoid re-rendering:
 ```go
 type Cache struct {
     mu    sync.RWMutex
@@ -165,19 +165,19 @@ type Cache struct {
 
 ## Debugging
 
-### Con logs detallados
+### With detailed logs
 ```bash
-pdf2img -i documento.pdf -o ./output -v
+pdf2img -i document.pdf -o ./output -v
 ```
 
-### En código
+### In code
 ```go
 import "log"
 
 log.Printf("Debug: %+v", variable)
 ```
 
-### Profiling de Go
+### Go profiling
 ```bash
 # CPU profiling
 go run -cpuprofile=cpu.prof .
@@ -185,32 +185,32 @@ go run -cpuprofile=cpu.prof .
 # Memory profiling
 go run -memprofile=mem.prof .
 
-# Análisis
+# Analysis
 go tool pprof cpu.prof
 ```
 
-## Dependencias
+## Dependencies
 
-| Librería | Versión | Propósito | Licencia |
-|----------|---------|----------|----------|
-| go-pdfium | v1.12.0 | Renderizar PDFs | Apache 2.0 |
+| Library | Version | Purpose | License |
+|----------|---------|---------|----------|
+| go-pdfium | v1.12.0 | Render PDFs | Apache 2.0 |
 | Cobra | v1.7.0 | CLI framework | Apache 2.0 |
 
-Para actualizar dependencias:
+To update dependencies:
 ```bash
 go get -u github.com/klippa-app/go-pdfium
 go get -u github.com/spf13/cobra
 go mod tidy
 ```
 
-## Contribución
+## Contribution
 
-1. Fork el proyecto
-2. Crea una rama (`git checkout -b feature/AmazingFeature`)
-3. Haz commits claros (`git commit -m 'Add feature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork the project
+2. Create a branch (`git checkout -b feature/AmazingFeature`)
+3. Make clear commits (`git commit -m 'Add feature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Licencia
+## License
 
-Apache 2.0 - Ver LICENSE
+Apache 2.0 - See LICENSE

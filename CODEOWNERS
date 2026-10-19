@@ -3,46 +3,46 @@
 # https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
 
 # Default owners for all files in the repository
-* @tu-usuario
+* @scopweb
 
 # CLI Command (root main package)
-/main.go @tu-usuario
-/split.go @tu-usuario
+/main.go @scopweb
+/split.go @scopweb
 
 # MCP Server Implementation
-/cmd/mcp-server/ @tu-usuario
-/mcp/ @tu-usuario
+/cmd/mcp-server/ @scopweb
+/mcp/ @scopweb
 
 # Core Converter Library
-/pkg/converter/ @tu-usuario
+/pkg/converter/ @scopweb
 
 # Security Tests
-/test/security/ @tu-usuario
+/test/security/ @scopweb
 
 # Configuration Files
-/.gitignore @tu-usuario
-/go.mod @tu-usuario
-/go.sum @tu-usuario
-/Makefile @tu-usuario
-/.editorconfig @tu-usuario
-/.golangci.yml @tu-usuario
+/.gitignore @scopweb
+/go.mod @scopweb
+/go.sum @scopweb
+/Makefile @scopweb
+/.editorconfig @scopweb
+/.golangci.yml @scopweb
 
 # Documentation
-/*.md @tu-usuario
-/docs/ @tu-usuario
+/*.md @scopweb
+/docs/ @scopweb
 
 # GitHub Configuration
-/.github/ @tu-usuario
+/.github/ @scopweb
 
 # Build Scripts
-/scripts/ @tu-usuario
+/scripts/ @scopweb
 
 # License and Contributing
-LICENSE @tu-usuario
-CONTRIBUTING.md @tu-usuario
-CODE_OF_CONDUCT.md @tu-usuario
-SECURITY.md @tu-usuario
-CODEOWNERS @tu-usuario
+LICENSE @scopweb
+CONTRIBUTING.md @scopweb
+CODE_OF_CONDUCT.md @scopweb
+SECURITY.md @scopweb
+CODEOWNERS @scopweb
 
 # Notes:
 # - Add more maintainers as the project grows

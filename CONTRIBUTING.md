@@ -1,242 +1,242 @@
-# Contribuir a pdf2img
+# Contributing to pdf2img
 
-¡Gracias por tu interés en contribuir! Este documento explica cómo hacerlo.
+Thanks for your interest in contributing! This document explains how to do it.
 
-## Código de Conducta
+## Code of Conduct
 
-- Sé respetuoso con otros colaboradores
-- Usa lenguaje inclusivo
-- Acepta críticas constructivas
-- Enfócate en el código, no en las personas
+- Be respectful toward other contributors
+- Use inclusive language
+- Accept constructive criticism
+- Focus on the code, not on the people
 
-## Cómo contribuir
+## How to contribute
 
-### Reportar bugs
+### Reporting bugs
 
-1. Verifica que el bug no está reportado
-2. Crea un issue con:
-   - Descripción clara del problema
-   - Pasos para reproducir
-   - Comportamiento esperado vs actual
-   - Sistema operativo y versión de Go
-   - Ejemplo mínimo reproducible
+1. Check that the bug is not already reported
+2. Create an issue with:
+    - A clear description of the problem
+    - Steps to reproduce
+    - Expected vs actual behavior
+    - Operating system and Go version
+    - A minimal reproducible example
 
 ```
-**Descripción:**
-El conversor falla con PDFs que contienen imágenes JPG.
+**Description:**
+The converter fails with PDFs that contain JPG images.
 
-**Pasos para reproducir:**
-1. Descargar documento.pdf
-2. Ejecutar: pdf2img -i documento.pdf -o ./output
-3. Ver error
+**Steps to reproduce:**
+1. Download document.pdf
+2. Run: pdf2img -i document.pdf -o ./output
+3. See the error
 
 **Error:**
 ```
 failed to render page: invalid image format
 ```
 
-**Sistema:**
+**System:**
 - OS: Windows 11
 - Go: 1.21
 ```
 
-### Sugerir mejoras
+### Suggesting improvements
 
-1. Abre un issue con etiqueta `enhancement`
-2. Describe la mejora detalladamente
-3. Explica el caso de uso
-4. Sugiere una posible solución
+1. Open an issue with the `enhancement` label
+2. Describe the improvement in detail
+3. Explain the use case
+4. Suggest a possible solution
 
-### Enviar un Pull Request
+### Submitting a Pull Request
 
-#### Preparación
+#### Preparation
 
 ```bash
-# Fork el repositorio
-git clone https://github.com/tu-usuario/pdf2img.git
+# Fork the repository
+git clone https://github.com/scopweb/mcp-go-pdf-to-img.git
 cd pdf2img
 
-# Crear rama para tu feature
+# Create a branch for your feature
 git checkout -b feature/tu-feature-name
 ```
 
-#### Desarrollo
+#### Development
 
-1. **Mantener código limpio**
-   ```bash
-   # Formatear código
-   make fmt
+1. **Keep the code clean**
+    ```bash
+    # Format the code
+    make fmt
 
-   # Lint
-   make lint
-   ```
+    # Lint
+    make lint
+    ```
 
-2. **Escribir tests**
-   ```bash
-   # Si agregaste nuevas funciones
-   go test -v ./...
+2. **Write tests**
+    ```bash
+    # If you added new functions
+    go test -v ./...
 
-   # Verificar coverage
-   go test -cover ./...
-   ```
+    # Check coverage
+    go test -cover ./...
+    ```
 
-3. **Commits significativos**
-   ```bash
-   # Commits claros y atómicos
-   git commit -m "Add feature: description"
+3. **Meaningful commits**
+    ```bash
+    # Clear and atomic commits
+    git commit -m "Add feature: description"
 
-   # Evitar
-   git commit -m "Fix stuff"
-   ```
+    # Avoid
+    git commit -m "Fix stuff"
+    ```
 
-#### Enviar PR
+#### Submit the PR
 
 ```bash
-# Push a tu fork
+# Push to your fork
 git push origin feature/tu-feature-name
 
-# Crear Pull Request en GitHub
-# - Título claro
-# - Descripción detallada
-# - Referencia a issues relacionados
-# - Screenshots si es UI
+# Create a Pull Request on GitHub
+# - Clear title
+# - Detailed description
+# - Reference to related issues
+# - Screenshots if it is UI
 ```
 
-## Estructura de un buen PR
+## Structure of a good PR
 
 ```markdown
-## Descripción
-Qué hace tu PR (2-3 líneas)
+## Description
+What your PR does (2-3 lines)
 
-## Tipo de cambio
+## Type of change
 - [ ] Bug fix
-- [ ] Nueva feature
-- [ ] Mejora existente
-- [ ] Documentación
+- [ ] New feature
+- [ ] Existing improvement
+- [ ] Documentation
 - [ ] Refactoring
 
-## Cambios realizados
-- Cambio 1
-- Cambio 2
-- Cambio 3
+## Changes made
+- Change 1
+- Change 2
+- Change 3
 
 ## Testing
-Cómo probar:
-1. Paso 1
-2. Paso 2
+How to test:
+1. Step 1
+2. Step 2
 
 ## Checklist
-- [ ] Código formateado (make fmt)
-- [ ] Tests pasando (make test)
-- [ ] Lint pasando (make lint)
-- [ ] Documentación actualizada
-- [ ] Commits atómicos y claros
+- [ ] Code formatted (make fmt)
+- [ ] Tests passing (make test)
+- [ ] Lint passing (make lint)
+- [ ] Documentation updated
+- [ ] Atomic and clear commits
 ```
 
-## Guías de estilo
+## Style guidelines
 
 ### Go
 
 ```go
-// ✓ Bueno
+// ✓ Good
 func convertPDF(path string) error {
     if err := validatePath(path); err != nil {
         return fmt.Errorf("validation failed: %w", err)
-    }
-    // ...
+     }
+     // ...
     return nil
 }
 
-// ✗ Evitar
+// ✗ Avoid
 func ConvertPDF(path string) (err error) {
     err = validatePath(path)
     if err != nil {
         panic(err)
-    }
-    // ...
+     }
+     // ...
 }
 ```
 
-**Reglas:**
-- Nombres en inglés
-- 80 caracteres max por línea (flexible)
-- Error handling explícito
-- Defer para limpieza
-- Documentar funciones públicas
+**Rules:**
+- Names in English
+- 80 characters max per line (flexible)
+- Explicit error handling
+- Defer for cleanup
+- Document public functions
 
 ### Commit Messages
 
 ```
-Formato:
-<tipo>(<scope>): <subject>
+Format:
+<type>(<scope>): <subject>
 
 <body>
 
 <footer>
 
-Ejemplos:
+Examples:
 feat(converter): add support for encrypted PDFs
 fix(cli): correct DPI calculation
 docs(readme): update examples
 refactor(mcp): simplify server initialization
 test(converter): add edge case tests
 
-Tipos:
-- feat: Nueva feature
-- fix: Corrección de bug
-- docs: Cambios en documentación
-- style: Cambios de formato (no lógica)
-- refactor: Refactoring de código
-- test: Agregar o actualizar tests
-- chore: Cambios de dependencias, tooling, etc.
+Types:
+- feat: New feature
+- fix: Bug fix
+- docs: Documentation changes
+- style: Formatting changes (no logic)
+- refactor: Code refactoring
+- test: Add or update tests
+- chore: Dependency, tooling, etc. changes
 ```
 
-### Documentación
+### Documentation
 
-- README: Público, claro y conciso
-- Comentarios: Explica el "por qué", no el "qué"
-- Nombres: Auto-explicativos
-- Ejemplos: Código funcional y actualizado
+- README: Public, clear, and concise
+- Comments: Explain the "why", not the "what"
+- Names: Self-explanatory
+- Examples: Functional and up-to-date code
 
 ```go
-// ✓ Bueno
+// ✓ Good
 // renderPage renders a PDF page to an image.
 // If DPI is 0, defaults to 150.
 func (c *Converter) renderPage(page int, dpi float64) error {
-    // ...
+     // ...
 }
 
-// ✗ Evitar
+// ✗ Avoid
 // render page
 func render(p int, d float64) error {
-    // ...
+     // ...
 }
 ```
 
-## Proceso de review
+## Review process
 
-1. Verificamos:
-   - Código limpio y bien estructurado
-   - Tests pasando
-   - Documentación actualizada
-   - Commits significativos
+1. We check:
+    - Clean and well-structured code
+    - Tests passing
+    - Documentation updated
+    - Meaningful commits
 
-2. Podemos pedir:
-   - Cambios en el código
-   - Más tests
-   - Actualizar documentación
-   - Refactorizar
+2. We may request:
+    - Changes to the code
+    - More tests
+    - Documentation updates
+    - Refactoring
 
-3. Una vez aprobado:
-   - Merge automático
-   - Agradecimiento en CHANGELOG (próximas releases)
+3. Once approved:
+    - Automatic merge
+    - Thanks in CHANGELOG (upcoming releases)
 
-## Desarrollo local
+## Local development
 
 ### Setup
 
 ```bash
-git clone https://github.com/tu-usuario/pdf2img.git
+git clone https://github.com/scopweb/mcp-go-pdf-to-img.git
 cd pdf2img
 go mod download
 ```
@@ -244,67 +244,67 @@ go mod download
 ### Build
 
 ```bash
-make build          # Compilar CLI
-make build-dev      # Con símbolos de debug
-make test          # Ejecutar tests
-make fmt           # Formatear código
-make lint          # Lint
-make clean         # Limpiar
+make build           # Build the CLI
+make build-dev       # With debug symbols
+make test           # Run tests
+make fmt            # Format the code
+make lint           # Lint
+make clean          # Clean
 ```
 
 ### Debug
 
 ```bash
-# Con logs
-./pdf2img -i documento.pdf -o ./output -v
+# With logs
+./pdf2img -i document.pdf -o ./output -v
 
 # Profiling
 go test -cpuprofile=cpu.prof ./...
 go tool pprof cpu.prof
 ```
 
-## Áreas donde podemos ayuda
+## Areas where help is appreciated
 
-### Alto impacto
+### High impact
 - Performance improvements
-- Nuevos formatos de salida
-- Mejor manejo de errores
-- Documentación
+- New output formats
+- Better error handling
+- Documentation
 
-### Mediano impacto
-- Tests adicionales
-- Ejemplos mejorados
+### Medium impact
+- Additional tests
+- Improved examples
 - Refactoring
 - CI/CD improvements
 
-### Baja prioridad
-- Cambios cosméticos
-- Comentarios sin valor
-- Cambios de nombres sin contexto
+### Low priority
+- Cosmetic changes
+- Comments without value
+- Name changes without context
 
-## Preguntas frecuentes
+## Frequently asked questions
 
-**¿Puedo trabajar en una feature que está en el roadmap?**
-Abre un issue primero para coordinar.
+**Can I work on a feature that is on the roadmap?**
+Open an issue first to coordinate.
 
-**¿Cuánto tiempo tarda un review?**
-Usualmente 3-5 días, máximo 2 semanas.
+**How long does a review take?**
+Usually 3-5 days, at most 2 weeks.
 
-**¿Mi PR fue rechazada. ¿Qué hago?**
-Lée los comentarios, aprende de ellos. Podés ajustar y resubmitir.
+**My PR was rejected. What do I do?**
+Read the comments and learn from them. You can adjust and resubmit.
 
-**¿Necesito firmar algo?**
-No. Solo mantén la licencia Apache 2.0.
+**Do I need to sign anything?**
+No. Just keep the Apache 2.0 license.
 
-## Agradecimientos
+## Acknowledgments
 
-Valoramos cada contribución, grande o pequeña. Si tu PR fue mergeado, aparecerás en:
-- Historial de commits
-- CONTRIBUTORS.md (próximamente)
+We value every contribution, big or small. If your PR is merged, you will appear in:
+- Commit history
+- CONTRIBUTORS.md (coming soon)
 - Release notes
 
 ---
 
-**¿Preguntas?** Abre un issue o contacta a los maintainers.
+**Questions?** Open an issue or contact the maintainers.
 
-¡Gracias por contribuir a pdf2img!
+Thanks for contributing to pdf2img!

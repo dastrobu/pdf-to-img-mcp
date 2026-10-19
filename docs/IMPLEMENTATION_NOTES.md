@@ -1,40 +1,40 @@
-# Notas de Implementación - PDF2IMG
+# Implementation Notes - PDF2IMG
 
-## Estado Final ✅
+## Final Status ✅
 
-**Proyecto completamente funcional** - Convertidor de PDF a imágenes en Go puro (sin CGO)
+**Fully functional project** - Pure Go PDF-to-image converter (no CGO)
 
-## Cambios Realizados
+## Changes Made
 
-### 1. Actualización de Versión (v1.12.0 → v1.17.2)
+### 1. Version Update (v1.12.0 → v1.17.2)
 
-**Problema**: go-pdfium v1.12.0 tenía bugs graves en ambas versiones (CGO y WebAssembly)
-- Errores de compilación en la versión CGO
-- Métodos faltantes en la versión WebAssembly
+**Problem**: go-pdfium v1.12.0 had serious bugs in both versions (CGO and WebAssembly)
+- Compilation errors in the CGO version
+- Missing methods in the WebAssembly version
 
-**Solución**: Actualizar a v1.17.2 que tiene implementación WebAssembly estable
+**Solution**: Upgrade to v1.17.2, which has a stable WebAssembly implementation
 
-### 2. Cambios en la API
+### 2. API Changes
 
 #### OpenDocument
 ```go
-// v1.12.0 (incorrecto)
+// v1.12.0 (incorrect)
 OpenDocument(&requests.OpenDocument{
-    FileBytes: &pdfBytes,  // ❌ No existía
+    FileBytes: &pdfBytes,   // ❌ Did not exist
 })
 
-// v1.17.2 (correcto)
+// v1.17.2 (correct)
 OpenDocument(&requests.OpenDocument{
-    File: &pdfBytes,       // ✅ Correcto
+    File: &pdfBytes,        // ✅ Correct
 })
 ```
 
 #### RenderPageInDPI
 ```go
-// v1.12.0 (incorrecto)
+// v1.12.0 (incorrect)
 pageRender, err := c.pdfium.RenderPageInDPI(page, dpi, dpi, flags)
 
-// v1.17.2 (correcto)
+// v1.17.2 (correct)
 pageRender, err := c.instance.RenderPageInDPI(&requests.RenderPageInDPI{
     DPI: int(dpi),
     Page: requests.Page{
@@ -45,43 +45,43 @@ pageRender, err := c.instance.RenderPageInDPI(&requests.RenderPageInDPI{
     },
 })
 
-// Acceder a la imagen
-img := pageRender.Result.Image  // ✅ pageRender.Result es requerido
+// Access the image
+img := pageRender.Result.Image   // ✅ pageRender.Result is required
 ```
 
-### 3. Implementación WebAssembly
+### 3. WebAssembly Implementation
 
-Se cambió de `single_threaded` (CGO) a `webassembly` (Pure Go):
+Changed from `single_threaded` (CGO) to `webassembly` (Pure Go):
 
 ```go
-// Usar WebAssembly en lugar de CGO
+// Use WebAssembly instead of CGO
 pool, err := webassembly.Init(webassembly.Config{
-    MinIdle:  1,
-    MaxIdle:  1,
-    MaxTotal: 1,
+    MinIdle:   1,
+    MaxIdle:   1,
+    MaxTotal:  1,
 })
 ```
 
-### 4. Lectura de Archivos
+### 4. File Reading
 
-WebAssembly requiere acceder a archivos en memoria:
+WebAssembly requires accessing files in memory:
 
 ```go
-// Leer el PDF en bytes
+// Read the PDF into bytes
 pdfBytes, err := os.ReadFile(opts.InputPath)
 if err != nil {
     return nil, err
 }
 
-// Pasar como bytes, no como path
+// Pass as bytes, not as a path
 doc, err := c.instance.OpenDocument(&requests.OpenDocument{
-    File: &pdfBytes,  // Bytes, no FilePath
+    File: &pdfBytes,   // Bytes, not FilePath
 })
 ```
 
-## Pruebas Realizadas
+## Tests Performed
 
-✅ **CLI básico**
+✅ **Basic CLI**
 ```bash
 pdf2img -i example.pdf -o output -f png
 # ✓ Conversion Complete
@@ -89,13 +89,13 @@ pdf2img -i example.pdf -o output -f png
 # Successful: 1
 ```
 
-✅ **Formato JPG con DPI personalizado**
+✅ **JPG format with custom DPI**
 ```bash
 pdf2img -i example.pdf -o output -f jpg -d 200
-# ✓ page_0001.jpg (395 KB) generado correctamente
+# ✓ page_0001.jpg (395 KB) generated correctly
 ```
 
-✅ **Comando info**
+✅ **info command**
 ```bash
 pdf2img info example.pdf
 # PDF Information
@@ -104,75 +104,75 @@ pdf2img info example.pdf
 # Size: 114.44 KB
 ```
 
-✅ **Compilación sin errores**
+✅ **Compilation without errors**
 - pdf2img.exe: 18 MB (Windows executable, PE32+ x86-64)
 - mcp-server.exe: 18 MB (Windows executable, PE32+ x86-64)
 
-## Ventajas de la Solución Final
+## Advantages of the Final Solution
 
 ### Pure Go
-- ✅ Sin CGO, sin necesidad de compilador C
-- ✅ Sin dependencias externas después de compilar
+- ✅ No CGO, no C compiler needed
+- ✅ No external dependencies after compilation
 - ✅ Single binary self-contained (~18 MB)
 
-### Multiplataforma
-- ✅ Windows, Linux, macOS con mismo código
-- ✅ Mismo tamaño de binario en todas plataformas
-- ✅ Sin problemas de compatibilidad de librerías
+### Cross-platform
+- ✅ Windows, Linux, macOS with the same code
+- ✅ Same binary size on all platforms
+- ✅ No library compatibility issues
 
 ### Performance
-- ✅ ~2x más rápido que multi-threaded CGO
-- ✅ Ejecución aislada en sandbox WebAssembly
-- ✅ Mejor manejo de recursos
+- ✅ ~2x faster than multi-threaded CGO
+- ✅ Isolated execution in a WebAssembly sandbox
+- ✅ Better resource management
 
-### Fiabilidad
-- ✅ go-pdfium v1.17.2 es más estable
-- ✅ WebAssembly previene crashes de la librería C
-- ✅ Mejor manejo de errores
+### Reliability
+- ✅ go-pdfium v1.17.2 is more stable
+- ✅ WebAssembly prevents crashes from the C library
+- ✅ Better error handling
 
-## Problemas Evitados
+## Problems Avoided
 
-1. **CGO en v1.12.0**: Errors en `PdfiumImplementation` undefined
-2. **WebAssembly en v1.12.0**: Métodos faltantes (`FPDFAnnot_*` functions)
-3. **Filesystem en WebAssembly**: Resuelto usando bytes en memoria
-4. **Pool management**: Cambio de `pool.Return()` a `instance.Close()`
+1. **CGO in v1.12.0**: Errors with `PdfiumImplementation` undefined
+2. **WebAssembly in v1.12.0**: Missing methods (`FPDFAnnot_*` functions)
+3. **Filesystem in WebAssembly**: Resolved by using in-memory bytes
+4. **Pool management**: Change from `pool.Return()` to `instance.Close()`
 
-## Estructura Final
+## Final Structure
 
 ```
 pdf2img/
 ├── cmd/
-│   ├── pdf2img/main.go           # CLI (100% funcional)
-│   └── mcp-server/main.go        # MCP Server (100% funcional)
+│     ├── pdf2img/main.go            # CLI (100% functional)
+│     └── mcp-server/main.go         # MCP Server (100% functional)
 ├── pkg/
-│   └── converter/
-│       ├── converter.go           # Lógica principal (v1.17.2 compatible)
-│       └── converter_test.go      # Tests
+│    └── converter/
+│        ├── converter.go            # Core logic (v1.17.2 compatible)
+│        └── converter_test.go       # Tests
 ├── mcp/
-│   └── server.go                 # MCP implementation
-├── go.mod                        # go-pdfium v1.17.2, cobra v1.7.0
-└── README.md                     # Documentación actualizada
+│    └── server.go                  # MCP implementation
+├── go.mod                         # go-pdfium v1.17.2, cobra v1.7.0
+└── README.md                      # Updated documentation
 ```
 
-## Binarios Generados
+## Generated Binaries
 
-| Archivo | Tamaño | Plataforma | Funcionalidad |
+| File | Size | Platform | Functionality |
 |---------|--------|-----------|-----------------|
-| pdf2img.exe | 18 MB | Windows x86-64 | CLI completa ✅ |
+| pdf2img.exe | 18 MB | Windows x86-64 | Full CLI ✅ |
 | mcp-server.exe | 18 MB | Windows x86-64 | MCP Server ✅ |
 
-## Conclusión
+## Conclusion
 
-El proyecto está **100% funcional** con:
-- ✅ Conversión de PDF a PNG/JPG
-- ✅ Control de DPI y rango de páginas
-- ✅ Información de metadatos de PDF
-- ✅ CLI completa con múltiples opciones
-- ✅ MCP Server para integración con IA
-- ✅ Pure Go (sin CGO)
-- ✅ Single binary multiplataforma
-- ✅ Código limpio y bien documentado
+The project is **100% functional** with:
+- ✅ PDF to PNG/JPG conversion
+- ✅ DPI and page range control
+- ✅ PDF metadata information
+- ✅ Full CLI with multiple options
+- ✅ MCP Server for AI integration
+- ✅ Pure Go (no CGO)
+- ✅ Cross-platform single binary
+- ✅ Clean, well-documented code
 
-**Fecha**: 2025-11-06
-**Versión**: 1.0.0
-**Licencia**: Apache 2.0
+**Date**: 2025-11-06
+**Version**: 1.0.0
+**License**: Apache 2.0

@@ -23,14 +23,14 @@ type Converter interface {
 	Close() error
 }
 
-// Handlers encapsula todos los handlers HTTP con sus dependencias.
+// Handlers encapsulates all the HTTP handlers and their dependencies.
 type Handlers struct {
 	converter Converter
 	logger    logging.Logger
 	config    *config.ServerConfig
 }
 
-// NewHandlers crea un nuevo set de handlers.
+// NewHandlers creates a new set of handlers.
 func NewHandlers(conv Converter, logger logging.Logger, config *config.ServerConfig) *Handlers {
 	return &Handlers{
 		converter: conv,
@@ -39,13 +39,13 @@ func NewHandlers(conv Converter, logger logging.Logger, config *config.ServerCon
 	}
 }
 
-// Health responde con status OK.
+// Health responds with an OK status.
 func (h *Handlers) Health(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte("ok"))
 }
 
-// ConvertRequest contiene los parámetros para conversión.
+// ConvertRequest holds the conversion parameters.
 type ConvertRequest struct {
 	DPI         int    `json:"dpi,omitempty"`
 	Format      string `json:"format,omitempty"`
@@ -57,7 +57,7 @@ type ConvertRequest struct {
 	RefreshEvery int   `json:"refresh_every,omitempty"`
 }
 
-// ConvertResponse contiene el resultado de la conversión.
+// ConvertResponse holds the result of the conversion.
 type ConvertResponse struct {
 	TotalPages   int      `json:"total_pages"`
 	Successful   int      `json:"successful"`
@@ -67,7 +67,7 @@ type ConvertResponse struct {
 	WarningPages []int    `json:"warning_pages,omitempty"`
 }
 
-// Convert convierte un PDF a imágenes y devuelve un ZIP con los resultados.
+// Convert converts a PDF to images and returns a ZIP with the results.
 func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -89,7 +89,7 @@ func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	// Crear archivo temporal para upload
+	// Create a temporary file for the upload
 	tmpFile, err := os.CreateTemp("", "upload-*.pdf")
 	if err != nil {
 		h.logger.Error("failed to create temp file", err)
@@ -99,7 +99,7 @@ func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 	tmpPath := tmpFile.Name()
 	defer os.Remove(tmpPath)
 
-	// Guardar archivo
+	// Save the file
 	if _, err := io.Copy(tmpFile, file); err != nil {
 		tmpFile.Close()
 		h.logger.Error("failed to save uploaded file", err)
@@ -108,14 +108,14 @@ func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 	}
 	tmpFile.Close()
 
-	// Parsear parámetros de conversión
+	// Parse conversion parameters
 	var req ConvertRequest
 	if err := h.parseConvertParams(r, &req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	// Crear directorio temporal de salida
+	// Create a temporary output directory
 	tmpOutputDir, err := os.MkdirTemp("", "pdf2img-*")
 	if err != nil {
 		h.logger.Error("failed to create temp output dir", err)
@@ -124,7 +124,7 @@ func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 	}
 	defer os.RemoveAll(tmpOutputDir)
 
-	// Configurar opciones de conversión
+	// Configure conversion options
 	opts := &converter.ConvertOptions{
 		InputPath:    tmpPath,
 		OutputDir:    tmpOutputDir,
@@ -138,7 +138,7 @@ func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 		RefreshEvery: req.RefreshEvery,
 	}
 
-	// Convertir PDF
+	// Convert the PDF
 	result, err := h.converter.Convert(opts)
 	if err != nil {
 		h.logger.Error("PDF conversion failed", err)
@@ -146,7 +146,7 @@ func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Preparar respuesta
+	// Prepare the response
 	response := ConvertResponse{
 		TotalPages:   result.TotalPages,
 		Successful:   result.Successful,
@@ -156,14 +156,14 @@ func (h *Handlers) Convert(w http.ResponseWriter, r *http.Request) {
 		WarningPages: result.WarningPages,
 	}
 
-	// Si no hay archivos de salida, devolver JSON con el resultado
+	// If there are no output files, return the result as JSON
 	if len(result.OutputFiles) == 0 {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 		return
 	}
 
-	// Devolver ZIP con las imágenes
+	// Return a ZIP with the images
 	h.serveZip(w, header.Filename, result.OutputFiles)
 }
 
@@ -181,19 +181,19 @@ func (h *Handlers) parseConvertParams(r *http.Request, req *ConvertRequest) erro
 	req.RefreshEvery = h.config.Convert.RefreshEvery
 	req.RetryFailed = h.config.Convert.RetryOnFailure
 
-	// Parsear DPI
+	// Parse DPI
 	if dpiStr := r.FormValue("dpi"); dpiStr != "" {
 		if dpi, err := strconv.Atoi(dpiStr); err == nil && dpi > 0 {
 			req.DPI = dpi
 		}
 	}
 
-	// Parsear formato
+	// Parse the format
 	if format := r.FormValue("format"); format != "" {
 		req.Format = format
 	}
 
-	// Parsear páginas
+	// Parse the pages
 	if startStr := r.FormValue("start_page"); startStr != "" {
 		if start, err := strconv.Atoi(startStr); err == nil {
 			req.StartPage = start
@@ -205,25 +205,25 @@ func (h *Handlers) parseConvertParams(r *http.Request, req *ConvertRequest) erro
 		}
 	}
 
-	// Parsear prefijo
+	// Parse the prefix
 	req.Prefix = r.FormValue("prefix")
 	if req.Prefix == "" {
 		req.Prefix = "page_"
 	}
 
-	// Parsear retry
+	// Parse retry
 	if retryStr := r.FormValue("retry"); retryStr != "" {
 		req.RetryFailed, _ = strconv.ParseBool(retryStr)
 	}
 
-	// Parsear pool size
+	// Parse pool size
 	if poolStr := r.FormValue("pool_size"); poolStr != "" {
 		if pool, err := strconv.Atoi(poolStr); err == nil && pool > 0 {
 			req.PoolSize = pool
 		}
 	}
 
-	// Parsear refresh every
+	// Parse refresh every
 	if refreshStr := r.FormValue("refresh_every"); refreshStr != "" {
 		if refresh, err := strconv.Atoi(refreshStr); err == nil && refresh >= 0 {
 			req.RefreshEvery = refresh
@@ -234,7 +234,7 @@ func (h *Handlers) parseConvertParams(r *http.Request, req *ConvertRequest) erro
 }
 
 func (h *Handlers) serveZip(w http.ResponseWriter, filename string, files []string) {
-	// Crear archivo ZIP temporal
+	// Create a temporary ZIP file
 	zipFile, err := os.CreateTemp("", "result-*.zip")
 	if err != nil {
 		h.logger.Error("failed to create zip file", err)
@@ -245,14 +245,14 @@ func (h *Handlers) serveZip(w http.ResponseWriter, filename string, files []stri
 	zipFile.Close()
 	defer os.Remove(zipPath)
 
-	// Crear ZIP
+	// Create the ZIP
 	if err := h.createZip(zipPath, files); err != nil {
 		h.logger.Error("failed to create zip", err)
 		http.Error(w, "internal server error", http.StatusInternalServerError)
 		return
 	}
 
-	// Abrir archivo ZIP
+	// Open the ZIP file
 	zipRead, err := os.Open(zipPath)
 	if err != nil {
 		h.logger.Error("failed to open zip", err)
@@ -261,7 +261,7 @@ func (h *Handlers) serveZip(w http.ResponseWriter, filename string, files []stri
 	}
 	defer zipRead.Close()
 
-	// Enviar respuesta
+	// Send the response
 	w.Header().Set("Content-Type", "application/zip")
 	zipName := sanitizeFilename(filename) + "-images.zip"
 	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", zipName))
@@ -296,7 +296,7 @@ func (h *Handlers) createZip(zipPath string, files []string) error {
 	return nil
 }
 
-// Info devuelve información sobre un PDF.
+// Info returns information about a PDF.
 func (h *Handlers) Info(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost && r.Method != http.MethodGet {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -321,7 +321,7 @@ func (h *Handlers) Info(w http.ResponseWriter, r *http.Request) {
 		}
 		defer file.Close()
 
-		// Crear archivo temporal para upload
+		// Create a temporary file for the upload
 		tmpFile, err := os.CreateTemp("", "upload-*.pdf")
 		if err != nil {
 			h.logger.Error("failed to create temp file", err)
@@ -339,14 +339,14 @@ func (h *Handlers) Info(w http.ResponseWriter, r *http.Request) {
 		}
 		tmpFile.Close()
 	} else {
-		// GET: obtener URL del archivo como parámetro
+		// GET: obtain the file URL as a parameter
 		fileURL := r.FormValue("url")
 		if fileURL == "" {
 			http.Error(w, "missing url parameter", http.StatusBadRequest)
 			return
 		}
 
-		// Descargar archivo
+		// Download the file
 		tmpFile, err := os.CreateTemp("", "upload-*.pdf")
 		if err != nil {
 			h.logger.Error("failed to create temp file", err)
@@ -374,7 +374,7 @@ func (h *Handlers) Info(w http.ResponseWriter, r *http.Request) {
 		tmpFile.Close()
 	}
 
-	// Obtener información del PDF
+	// Get the PDF information
 	info, err := h.converter.GetPDFInfo(tmpPath)
 	if err != nil {
 		h.logger.Error("failed to get PDF info", err)
@@ -386,7 +386,7 @@ func (h *Handlers) Info(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(info)
 }
 
-// sanitizeFilename limpia un nombre de archivo para evitar caracteres problemáticos.
+// sanitizeFilename cleans a filename to avoid problematic characters.
 func sanitizeFilename(filename string) string {
 	if ext := filepath.Ext(filename); ext != "" {
 		filename = filename[:len(filename)-len(ext)]

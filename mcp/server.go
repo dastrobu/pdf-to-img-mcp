@@ -249,7 +249,7 @@ func (s *MCPServer) handlePDFCompress(input json.RawMessage) (ToolResult, error)
 		return ToolResult{}, fmt.Errorf("invalid input: %w", err)
 	}
 
-	// Usar pdfcpu para optimizar el PDF
+	// Use pdfcpu to optimize the PDF
 	err := s.compressPDF(req.PDFPath, req.OutputPath)
 	if err != nil {
 		return ToolResult{}, fmt.Errorf("failed to compress PDF: %w", err)
@@ -261,12 +261,12 @@ func (s *MCPServer) handlePDFCompress(input json.RawMessage) (ToolResult, error)
 	}, nil
 }
 
-// compressPDF usa pdfcpu para optimizar y comprimir el PDF
+// compressPDF uses pdfcpu to optimize and compress the PDF
 func (s *MCPServer) compressPDF(inputPath, outputPath string) error {
-	// Configurar opciones de optimización
+	// Configure the optimization options
 	conf := api.LoadConfiguration()
 
-	// Optimizar: comprimir imágenes, remover elementos innecesarios
+	// Optimize: compress images, remove unnecessary elements
 	return api.OptimizeFile(inputPath, outputPath, conf)
 }
 

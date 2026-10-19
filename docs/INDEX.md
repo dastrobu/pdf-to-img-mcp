@@ -1,269 +1,267 @@
-# 📑 Índice del Proyecto pdf2img
+# 📑 pdf2img Project Index
 
-## 🚀 Inicio rápido
+## 🚀 Quick start
 
-### ¿Quiero empezar ya?
+### Want to get started right away?
 → [QUICKSTART.md](QUICKSTART.md) 
 
-### ¿Quiero entender el proyecto?
+### Want to understand the project?
 → [SUMMARY.md](SUMMARY.md)
 
-### ¿Quiero la documentación completa?
+### Want the complete documentation?
 → [README.md](README.md)
 
 ---
 
-## 📚 Documentación por tema
+## 📚 Documentation by topic
 
-### Para usuarios
+### For users
 
-| Documento | Contenido |
+| Document | Content |
 |-----------|----------|
-| [QUICKSTART.md](QUICKSTART.md) | Instalación y primeros pasos |
-| [README.md](README.md) | Documentación completa y referencia |
-| [EXAMPLES.md](EXAMPLES.md) | Ejemplos prácticos de uso |
+| [QUICKSTART.md](QUICKSTART.md) | Installation and first steps |
+| [README.md](README.md) | Complete documentation and reference |
+| [EXAMPLES.md](EXAMPLES.md) | Practical usage examples |
 
-**Recomendado leer en orden:** QUICKSTART → README → EXAMPLES
+**Recommended reading order:** QUICKSTART → README → EXAMPLES
 
-### Para desarrolladores
+### For developers
 
-| Documento | Contenido |
+| Document | Content |
 |-----------|----------|
 | [DEVELOPMENT.md](DEVELOPMENT.md) | Setup, build, debugging |
-| [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | Arquitectura interna |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Cómo contribuir |
+| [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | Internal architecture |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
 
-**Recomendado leer en orden:** PROJECT_STRUCTURE → DEVELOPMENT → CONTRIBUTING
+**Recommended reading order:** PROJECT_STRUCTURE → DEVELOPMENT → CONTRIBUTING
 
-### Referencia
+### Reference
 
-| Documento | Contenido |
+| Document | Content |
 |-----------|----------|
-| [LICENSE](LICENSE) | Licencia Apache 2.0 |
-| [SUMMARY.md](SUMMARY.md) | Resumen del proyecto |
+| [LICENSE](LICENSE) | Apache 2.0 License |
+| [SUMMARY.md](SUMMARY.md) | Project summary |
 
 ---
 
-## 🎯 Por caso de uso
+## 🎯 By use case
 
-### "Necesito convertir un PDF a imágenes"
-1. [QUICKSTART.md](QUICKSTART.md) - Instalación
-2. Ejecutar: `pdf2img -i documento.pdf -o ./output`
+### "I need to convert a PDF to images"
+1. [QUICKSTART.md](QUICKSTART.md) - Installation
+2. Run: `pdf2img -i document.pdf -o ./output`
 
-### "Quiero entender cómo funciona"
-1. [SUMMARY.md](SUMMARY.md) - Resumen general
-2. [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) - Arquitectura
-3. Leer el código en `pkg/converter/converter.go`
+### "I want to understand how it works"
+1. [SUMMARY.md](SUMMARY.md) - General summary
+2. [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) - Architecture
+3. Read the code in `pkg/converter/converter.go`
 
-### "Quiero usar el servidor MCP con Claude"
-1. [README.md](README.md#servidor-mcp) - Sección MCP
-2. [EXAMPLES.md](EXAMPLES.md#mcp-server---ejemplos-de-integración) - Ejemplos MCP
+### "I want to use the MCP server with my MCP client"
+1. [README.md](README.md#mcp-server) - MCP section
+2. [EXAMPLES.md](EXAMPLES.md#mcp-server---integration-examples) - MCP examples
 
-### "Quiero contribuir al proyecto"
-1. [DEVELOPMENT.md](DEVELOPMENT.md) - Setup local
-2. [CONTRIBUTING.md](CONTRIBUTING.md) - Guía de contribución
-3. [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) - Entender el código
+### "I want to contribute to the project"
+1. [DEVELOPMENT.md](DEVELOPMENT.md) - Local setup
+2. [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guide
+3. [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) - Understand the code
 
-### "Necesito información específica"
-1. [README.md](README.md#solución-de-problemas) - Troubleshooting
-2. [EXAMPLES.md](EXAMPLES.md#solución-de-problemas-comunes) - Problemas comunes
+### "I need specific information"
+1. [README.md](README.md#troubleshooting) - Troubleshooting
+2. [EXAMPLES.md](EXAMPLES.md#troubleshooting-common-problems) - Common problems
 
 ---
 
-## 📂 Estructura de directorios
+## 📂 Directory structure
 
 ```
 pdf2img/
-├── cmd/                          # Aplicaciones
-│   ├── pdf2img/main.go          # CLI
-│   └── mcp-server/main.go       # Servidor MCP
-├── mcp/                          # Lógica MCP
-├── pkg/converter/                # Lógica de conversión
-├── [Documentación]               # 8 archivos .md
+├── cmd/                           # Applications
+│   ├── pdf2img/main.go           # CLI
+│   └── mcp-server/main.go        # MCP server
+├── mcp/                           # MCP logic
+├── pkg/converter/                 # Conversion logic
+├── [Documentation]                # 8 .md files
 ├── go.mod, Makefile, etc.
 └── LICENSE
 ```
 
-Ver [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) para detalles completos.
+See [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) for complete details.
 
 ---
 
-## 🔍 Búsqueda rápida
+## 🔍 Quick search
 
-### Instalación
+### Installation
 - [QUICKSTART.md](QUICKSTART.md)
-- [README.md#instalación](README.md#instalación)
+- [README.md#installation](README.md#installation)
 
-### Uso del CLI
-- [README.md#uso](README.md#uso)
-- [EXAMPLES.md#cli---ejemplos-prácticos](EXAMPLES.md#cli---ejemplos-prácticos)
+### CLI usage
+- [README.md#usage](README.md#usage)
+- [EXAMPLES.md#cli---practical-examples](EXAMPLES.md#cli---practical-examples)
 
-### Servidor MCP
-- [README.md#servidor-mcp](README.md#servidor-mcp)
-- [EXAMPLES.md#mcp-server](EXAMPLES.md#mcp-server---ejemplos-de-integración)
+### MCP server
+- [README.md#mcp-server](README.md#mcp-server)
+- [EXAMPLES.md#mcp-server](EXAMPLES.md#mcp-server---integration-examples)
 
 ### Troubleshooting
-- [README.md#solución-de-problemas](README.md#solución-de-problemas)
-- [EXAMPLES.md#solución-de-problemas-comunes](EXAMPLES.md#solución-de-problemas-comunes)
+- [README.md#troubleshooting](README.md#troubleshooting)
+- [EXAMPLES.md#troubleshooting-common-problems](EXAMPLES.md#troubleshooting-common-problems)
 
-### Desarrollo
+### Development
 - [DEVELOPMENT.md](DEVELOPMENT.md)
 - [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
 
-### Contribución
+### Contribution
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-## 📊 Contenido por archivo
+## 📊 Content by file
 
 ### README.md (5.6 KB)
-- Características principales
-- Instalación (3 métodos)
-- Uso del CLI
-- Servidor MCP
-- Dependencias
+- Key features
+- Installation (3 methods)
+- CLI usage
+- MCP server
+- Dependencies
 - Roadmap
 - Troubleshooting
 
 ### QUICKSTART.md (3.2 KB)
-- Instalación rápida (3 opciones)
-- Primeros pasos
-- Casos comunes
-- Problemas rápidos
+- Quick installation (3 options)
+- First steps
+- Common cases
+- Quick problems
 
 ### EXAMPLES.md (6.1 KB)
-- CLI: 6 ejemplos prácticos
-- MCP HTTP: Ejemplos completos
-- Desde código Go
-- Casos de uso reales
-- Troubleshooting avanzado
+- CLI: 6 practical examples
+- MCP HTTP: Complete examples
+- From Go code
+- Real use cases
+- Advanced troubleshooting
 
 ### DEVELOPMENT.md (4.4 KB)
-- Setup del entorno
-- Estructura del código
-- Compilación y pruebas
+- Environment setup
+- Code structure
+- Build and testing
 - Debugging
-- Extensiones futuras
+- Future extensions
 
 ### PROJECT_STRUCTURE.md (6.6 KB)
-- Árbol de directorios
-- Descripción de componentes
-- Flujo de datos
-- Dependencias
-- Convenciones de código
+- Directory tree
+- Component description
+- Data flow
+- Dependencies
+- Code conventions
 
 ### CONTRIBUTING.md (5.7 KB)
-- Código de conducta
-- Cómo reportar bugs
-- Enviar PRs
-- Guía de estilo
-- Proceso de review
+- Code of conduct
+- How to report bugs
+- Submitting PRs
+- Style guide
+- Review process
 
 ### SUMMARY.md (7.4 KB)
-- Resumen del proyecto
-- Características completadas
-- Estadísticas
-- Documentación disponible
-- Próximos pasos
+- Project summary
+- Completed features
+- Statistics
+- Available documentation
+- Next steps
 
 ---
 
-## 🎯 Flujo de navegación recomendado
+## 🎯 Recommended navigation flow
 
 ```
-¿Primer uso?
-    ├─→ QUICKSTART.md
-    ├─→ Instalar
-    ├─→ Probar con un PDF
-    └─→ README.md para más detalles
+First use?
+     ├─→ QUICKSTART.md
+     ├─→ Install
+     ├─→ Try it with a PDF
+     └─→ README.md for more details
 
-¿Usar como desarrollador?
-    ├─→ SUMMARY.md
-    ├─→ PROJECT_STRUCTURE.md
-    ├─→ DEVELOPMENT.md
-    └─→ Leer el código
+Use as a developer?
+     ├─→ SUMMARY.md
+     ├─→ PROJECT_STRUCTURE.md
+     ├─→ DEVELOPMENT.md
+     └─→ Read the code
 
-¿Contribuir?
-    ├─→ PROJECT_STRUCTURE.md
-    ├─→ DEVELOPMENT.md
-    ├─→ CONTRIBUTING.md
-    └─→ Crear un PR
+Contribute?
+     ├─→ PROJECT_STRUCTURE.md
+     ├─→ DEVELOPMENT.md
+     ├─→ CONTRIBUTING.md
+     └─→ Create a PR
 
-¿Usar el MCP server?
-    ├─→ README.md (sección MCP)
-    ├─→ EXAMPLES.md (sección MCP)
-    └─→ Integrar con Claude
+Use the MCP server?
+     ├─→ README.md (MCP section)
+     ├─→ EXAMPLES.md (MCP section)
+     └─→ Integrate with your MCP client
 
-¿Necesito ayuda?
-    ├─→ README.md (Troubleshooting)
-    ├─→ EXAMPLES.md (Problemas comunes)
-    └─→ Abrir un issue
+Need help?
+     ├─→ README.md (Troubleshooting)
+     ├─→ EXAMPLES.md (Common problems)
+     └─→ Open an issue
 ```
 
 ---
 
-## 📞 Navegación rápida
+## 📞 Quick navigation
 
-### 🔧 Instalación
-- [Unix/Linux/macOS](QUICKSTART.md#opción-1-linux--macos)
-- [Windows](QUICKSTART.md#opción-2-windows)
-- [Go directo](QUICKSTART.md#opción-3-go-directo-cualquier-so)
+### 🔧 Installation
+- [Installation](QUICKSTART.md#installation)
 
-### 💻 Comandos
-- [CLI básico](README.md#cli---conversión-básica)
-- [CLI avanzado](EXAMPLES.md)
-- [MCP server](README.md#servidor-mcp)
+### 💻 Commands
+- [Basic CLI](README.md#cli---basic-conversion)
+- [Advanced CLI](EXAMPLES.md)
+- [MCP server](README.md#mcp-server)
 
-### 🚀 Casos de uso
-- [Miniaturas](EXAMPLES.md#ejemplo-1-generar-miniaturas-de-pdfs-en-lote)
-- [Galería web](EXAMPLES.md#ejemplo-2-convertir-pdf-a-galería-de-imágenes-web)
-- [Integración web](EXAMPLES.md#ejemplo-3-integración-con-servicio-web)
+### 🚀 Use cases
+- [Thumbnails](EXAMPLES.md#1-generate-pdf-thumbnails-in-batch)
+- [Web gallery](EXAMPLES.md#2-convert-pdf-to-a-web-image-gallery)
+- [Web integration](EXAMPLES.md#3-integration-with-a-web-service)
 
-### 📚 Conceptos
-- [Arquitectura](PROJECT_STRUCTURE.md#flujo-de-datos)
-- [Convenciones](PROJECT_STRUCTURE.md#convenciones)
+### 📚 Concepts
+- [Architecture](PROJECT_STRUCTURE.md#data-flow)
+- [Conventions](PROJECT_STRUCTURE.md#conventions)
 - [Performance](PROJECT_STRUCTURE.md#performance)
 
 ---
 
-## 🆘 SOS - Necesito ayuda
+## 🆘 SOS - Need help
 
-| Problema | Solución |
+| Problem | Solution |
 |----------|----------|
-| No sé por dónde empezar | [QUICKSTART.md](QUICKSTART.md) |
-| Tengo un error | [Troubleshooting](README.md#solución-de-problemas) |
-| Quiero entender el código | [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) |
-| Tengo una pregunta | [EXAMPLES.md](EXAMPLES.md) o [README.md](README.md) |
-| Quiero contribuir | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| El servidor no funciona | [DEVELOPMENT.md](DEVELOPMENT.md#debugging) |
+| I don't know where to start | [QUICKSTART.md](QUICKSTART.md) |
+| I have an error | [Troubleshooting](README.md#troubleshooting) |
+| I want to understand the code | [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) |
+| I have a question | [EXAMPLES.md](EXAMPLES.md) or [README.md](README.md) |
+| I want to contribute | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| The server doesn't work | [DEVELOPMENT.md](DEVELOPMENT.md#debugging) |
 
 ---
 
-## 📈 Estadísticas
+## 📈 Statistics
 
-- **21** archivos en total
-- **6** archivos Go
-- **7** archivos de documentación
-- **~600+** líneas de código
-- **25+** KB de documentación
-- **Licencia**: Apache 2.0
-
----
-
-## ✨ Características destacadas
-
-- ✅ CLI completa
-- ✅ Servidor MCP
-- ✅ Documentación exhaustiva
-- ✅ Código limpio y testeable
-- ✅ Instalación fácil
-- ✅ Soporte Windows/Unix
-- ✅ Control de DPI
-- ✅ Rango de páginas
+- **21** files total
+- **6** Go files
+- **7** documentation files
+- **~600+** lines of code
+- **25+** KB of documentation
+- **License**: Apache 2.0
 
 ---
 
-**Última actualización**: 2025-11-06
+## ✨ Highlights
 
-Ver [SUMMARY.md](SUMMARY.md) para un resumen completo del proyecto.
+- ✅ Complete CLI
+- ✅ MCP server
+- ✅ Exhaustive documentation
+- ✅ Clean, testable code
+- ✅ Easy installation
+- ✅ Windows/Unix support
+- ✅ DPI control
+- ✅ Page range
+
+---
+
+**Last updated**: 2025-11-06
+
+See [SUMMARY.md](SUMMARY.md) for a complete project summary.

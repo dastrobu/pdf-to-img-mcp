@@ -1,351 +1,322 @@
 # Quick Start Guide
 
-## 5 minutos para tener pdf2img funcionando
+## Get pdf2img up and running in 5 minutes
 
-### Opción 1: Linux / macOS
-
-```bash
-# 1. Clona o descarga el proyecto
-cd pdf2img
-
-# 2. Ejecuta el script de instalación
-chmod +x install.sh
-./install.sh
-
-# 3. ¡Listo! Usa:
-./pdf2img -i tu-documento.pdf -o ./output
-```
-
-### Opción 2: Windows
+### Installation
 
 ```bash
-# 1. Abre PowerShell como administrador
-# 2. Navega a la carpeta del proyecto
-cd pdf2img
+# Requires Go 1.27+
+go install .
 
-# 3. Ejecuta el script de instalación
-install.bat
-
-# 4. ¡Listo! Usa:
-pdf2img.exe -i tu-documento.pdf -o .\output
+# Done! Use:
+pdf2img -i your-document.pdf -o ./output
 ```
 
-### Opción 3: Go directo (cualquier SO)
+## Getting started
+
+### Convert a complete PDF
 
 ```bash
-# Requiere Go 1.21+
-go mod download
-go build -o pdf2img .
-
-# Usar:
-./pdf2img -i documento.pdf -o ./output
+pdf2img -i document.pdf -o ./output
 ```
 
-## Primeros pasos
+**Result:**
+- ✓ Creates the `./output` directory
+- ✓ Generates `page_0001.png`, `page_0002.png`, etc.
 
-### Convertir un PDF completo
+### Get PDF information
 
 ```bash
-pdf2img -i documento.pdf -o ./salida
+pdf2img info document.pdf
 ```
 
-**Resultado:**
-- ✓ Crea directorio `./salida`
-- ✓ Genera `page_0001.png`, `page_0002.png`, etc.
-
-### Obtener información del PDF
-
-```bash
-pdf2img info documento.pdf
-```
-
-**Resultado:**
+**Result:**
 ```
 PDF Information
 ===============
-File: documento.pdf
+File: document.pdf
 Pages: 42
 Size: 2.50 MB
 ```
 
-### Convertir solo las primeras 5 páginas
+### Convert only the first 5 pages
 
 ```bash
-pdf2img -i documento.pdf -o ./salida --start 1 --end 5
+pdf2img -i document.pdf -o ./output --start 1 --end 5
 ```
 
-### Usar JPG en lugar de PNG
+### Use JPG instead of PNG
 
 ```bash
-pdf2img -i documento.pdf -o ./salida -f jpg
+pdf2img -i document.pdf -o ./output -f jpg
 ```
 
-### Aumentar calidad (más DPI)
+### Increase quality (higher DPI)
 
 ```bash
-pdf2img -i documento.pdf -o ./salida -d 300
+pdf2img -i document.pdf -o ./output -d 300
 ```
 
-| DPI | Uso |
+| DPI | Use |
 |-----|-----|
-| 72-96 | Web, pantalla |
-| 150 | Balance calidad/velocidad (default) |
-| 300 | Imprenta, documentos |
-| 600+ | Archivos muy detallados |
+| 72-96 | Web, screen |
+| 150 | Quality/speed balance (default) |
+| 300 | Print, documents |
+| 600+ | Highly detailed files |
 
-## Referencia completa de opciones
+## Complete options reference
 
-### Todas las banderas disponibles
+### All available flags
 
-| Flag | Corto | Descripción | Defecto | Ejemplo |
+| Flag | Short | Description | Default | Example |
 |------|-------|-------------|---------|---------|
-| `--input` | `-i` | Archivo PDF (requerido) | - | `-i documento.pdf` |
-| `--output` | `-o` | Directorio de salida | `.` (actual) | `-o ./output` |
-| `--format` | `-f` | Formato: `png` o `jpg` | `png` | `-f jpg` |
-| `--dpi` | `-d` | DPI para renderizado | `150` | `-d 300` |
-| `--start` | - | Página inicial (1-indexada) | `0` (primera) | `--start 1` |
-| `--end` | - | Página final (1-indexada) | `0` (última) | `--end 10` |
-| `--prefix` | - | Prefijo para archivos | `page_` | `--prefix img_` |
-| `--verbose` | `-v` | Salida detallada | `false` | `-v` |
-| `--retry` | - | Reintentar páginas fallidas con DPI reducido | `false` | `--retry` |
-| `--pool-size` | - | Max instancias PDFium en pool (para PDFs grandes) | `2` | `--pool-size 4` |
-| `--refresh-every` | - | Refrescar instancia WASM cada N páginas (0=desactivar) | `50` | `--refresh-every 25` |
+| `--input` | `-i` | PDF file (required) | - | `-i document.pdf` |
+| `--output` | `-o` | Output directory | `.` (current) | `-o ./output` |
+| `--format` | `-f` | Format: `png` or `jpg` | `png` | `-f jpg` |
+| `--dpi` | `-d` | DPI for rendering | `150` | `-d 300` |
+| `--start` | - | Start page (1-indexed) | `0` (first) | `--start 1` |
+| `--end` | - | End page (1-indexed) | `0` (last) | `--end 10` |
+| `--prefix` | - | Prefix for files | `page_` | `--prefix img_` |
+| `--verbose` | `-v` | Detailed output | `false` | `-v` |
+| `--retry` | - | Retry failed pages with reduced DPI | `false` | `--retry` |
+| `--pool-size` | - | Max PDFium instances in pool (for large PDFs) | `2` | `--pool-size 4` |
+| `--refresh-every` | - | Refresh the WASM instance every N pages (0=disable) | `50` | `--refresh-every 25` |
 
-### Casos de uso comunes
+### Common use cases
 
-#### Miniatura de primera página
+#### First-page thumbnail
 ```bash
-pdf2img -i documento.pdf -o ./thumbs --start 1 --end 1 -d 96 --prefix thumb_
+pdf2img -i document.pdf -o ./thumbs --start 1 --end 1 -d 96 --prefix thumb_
 ```
 
-#### Crear galería web
+#### Create a web gallery
 ```bash
-pdf2img -i documento.pdf -o ./web/images -f jpg -d 150
+pdf2img -i document.pdf -o ./web/images -f jpg -d 150
 ```
 
-#### Extraer rango específico
+#### Extract a specific range
 ```bash
-pdf2img -i libro.pdf -o ./capitulo5 --start 100 --end 150
+pdf2img -i libro.pdf -o ./chapter5 --start 100 --end 150
 ```
 
-## Combinaciones de opciones para diferentes escenarios
+## Option combinations for different scenarios
 
-### 📱 Para Web/Pantalla (baja calidad, rápido)
+### 📱 For Web/Screen (low quality, fast)
 ```bash
-pdf2img -i documento.pdf -o ./output -f jpg -d 96
+pdf2img -i document.pdf -o ./output -f jpg -d 96
 ```
-- Formato: JPG (más pequeño)
-- DPI: 96 (suficiente para pantalla)
-- Rápido y files pequeños
+- Format: JPG (smaller)
+- DPI: 96 (sufficient for screen)
+- Fast and small files
 
-### 📄 Documentos estándar (balance)
+### 📄 Standard documents (balanced)
 ```bash
-pdf2img -i documento.pdf -o ./output -f png -d 150
+pdf2img -i document.pdf -o ./output -f png -d 150
 ```
-- Formato: PNG (lossless)
-- DPI: 150 (default, balance calidad/velocidad)
-- Bueno para la mayoría de casos
+- Format: PNG (lossless)
+- DPI: 150 (default, quality/speed balance)
+- Good for most cases
 
-### 🖨️ Para imprenta/alta calidad
+### 🖨️ For print/high quality
 ```bash
-pdf2img -i documento.pdf -o ./output -f png -d 300
+pdf2img -i document.pdf -o ./output -f png -d 300
 ```
-- Formato: PNG (sin pérdida)
-- DPI: 300 (alta calidad)
-- Más lento pero excelente calidad
+- Format: PNG (lossless)
+- DPI: 300 (high quality)
+- Slower but excellent quality
 
-### 📚 PDFs muy grandes (>100 páginas) - Optimizado
+### 📚 Very large PDFs (>100 pages) - Optimized
 ```bash
-pdf2img -i documento_grande.pdf -o ./output -d 150 --refresh-every 50 --pool-size 3
+pdf2img -i large-document.pdf -o ./output -d 150 --refresh-every 50 --pool-size 3
 ```
-- `--refresh-every 50`: Refresca WASM cada 50 páginas (limpia memoria)
-- `--pool-size 3`: Más instancias PDFium para mejor rendimiento
-- Evita corrupción de rendering después de muchas páginas
+- `--refresh-every 50`: Refreshes WASM every 50 pages (cleans memory)
+- `--pool-size 3`: More PDFium instances for better performance
+- Avoids rendering corruption after many pages
 
-### 📚 PDFs muy grandes (>200 páginas) - Máximo control
+### 📚 Very large PDFs (>200 pages) - Maximum control
 ```bash
-pdf2img -i documento_enorme.pdf -o ./output -d 150 --refresh-every 25 --pool-size 4 --retry
+pdf2img -i huge-document.pdf -o ./output -d 150 --refresh-every 25 --pool-size 4 --retry
 ```
-- `--refresh-every 25`: Refresca más frecuentemente (más memoria)
-- `--pool-size 4`: Máximas instancias para mejor rendimiento
-- `--retry`: Reintenta páginas fallidas con DPI reducido
+- `--refresh-every 25`: Refreshes more frequently (more memory)
+- `--pool-size 4`: Maximum instances for better performance
+- `--retry`: Retries failed pages with reduced DPI
 
-### ⚡ Procesamiento rápido (baja calidad)
+### ⚡ Fast processing (low quality)
 ```bash
-pdf2img -i documento.pdf -o ./output -d 72
+pdf2img -i document.pdf -o ./output -d 72
 ```
-- DPI: 72 (mínimo, muy rápido)
-- Útil para previsualizaciones rápidas
+- DPI: 72 (minimum, very fast)
+- Useful for quick previews
 
-### 🎯 Paginas específicas (rango)
+### 🎯 Specific pages (range)
 ```bash
-pdf2img -i documento.pdf -o ./output --start 50 --end 150
+pdf2img -i document.pdf -o ./output --start 50 --end 150
 ```
-- Solo convierte páginas 50 a 150
-- Útil para procesar documentos muy grandes por partes
+- Only converts pages 50 to 150
+- Useful for processing very large documents in parts
 
-### 🔍 Paginas específicas + alta calidad
+### 🔍 Specific pages + high quality
 ```bash
-pdf2img -i documento.pdf -o ./output --start 1 --end 10 -d 300 -f png
+pdf2img -i document.pdf -o ./output --start 1 --end 10 -d 300 -f png
 ```
-- Primeras 10 páginas con máxima calidad
-- PNG lossless para preservar detalles
+- First 10 pages at maximum quality
+- Lossless PNG to preserve details
 
-### 📦 Miniaturas
+### 📦 Thumbnails
 ```bash
-pdf2img -i documento.pdf -o ./thumbs --start 1 --end 1 -d 96 --prefix thumb_ -f jpg
+pdf2img -i document.pdf -o ./thumbs --start 1 --end 1 -d 96 --prefix thumb_ -f jpg
 ```
-- Solo primera página
-- 96 DPI (bueno para thumbs)
-- JPG (más pequeño)
-- Prefijo: `thumb_`
+- Only the first page
+- 96 DPI (good for thumbnails)
+- JPG (smaller)
+- Prefix: `thumb_`
 
-### 🎬 Galería de imágenes
+### 🎬 Image gallery
 ```bash
-pdf2img -i documento.pdf -o ./gallery -f jpg -d 150 --prefix gallery_
+pdf2img -i document.pdf -o ./gallery -f jpg -d 150 --prefix gallery_
 ```
-- Todas las páginas
-- JPG (menor tamaño)
-- 150 DPI (balance)
-- Prefijo personalizado
+- All pages
+- JPG (smaller size)
+- 150 DPI (balanced)
+- Custom prefix
 
-### 📊 Reportes/Análisis
+### 📊 Reports/Analysis
 ```bash
-pdf2img -i reporte.pdf -o ./análisis -d 200 -f png --prefix report_
+pdf2img -i report.pdf -o ./analysis -d 200 -f png --prefix report_
 ```
-- Más alto que default (200 vs 150 DPI)
-- PNG para preservar calidad
-- Mejor para análisis detallados
+- Higher than default (200 vs 150 DPI)
+- PNG to preserve quality
+- Better for detailed analysis
 
-### 🖼️ Archivos detallados (gráficos, planos)
+### 🖼️ Detailed files (graphics, blueprints)
 ```bash
 pdf2img -i plano.pdf -o ./output -d 600 -f png
 ```
-- 600 DPI (muy alta calidad)
-- PNG (sin pérdida)
-- Más lento, pero excelente para detalles
+- 600 DPI (very high quality)
+- PNG (lossless)
+- Slower, but excellent for details
 
-### 🧪 Debugging/Diagnostico
+### 🧪 Debugging/Diagnosis
 ```bash
-pdf2img -i documento.pdf -o ./output -v --retry
+pdf2img -i document.pdf -o ./output -v --retry
 ```
-- `-v`: Salida detallada (verbose)
-- `--retry`: Reintentar páginas fallidas
-- Útil para diagnosticar problemas
+- `-v`: Detailed output (verbose)
+- `--retry`: Retry failed pages
+- Useful for diagnosing issues
 
-### 📋 Información del PDF (sin conversión)
+### 📋 PDF information (no conversion)
 ```bash
-pdf2img info documento.pdf
+pdf2img info document.pdf
 ```
-- Solo muestra: páginas, tamaño, dimensiones
-- No convierte nada
+- Only shows: pages, size, dimensions
+- Does not convert anything
 
-## Combinaciones avanzadas para PDFs problemáticos
+## Advanced combinations for problematic PDFs
 
-### Documento con muchas páginas y posibles errores
+### Document with many pages and possible errors
 ```bash
-pdf2img -i documento.pdf -o ./output -d 150 --refresh-every 25 --pool-size 4 --retry -v
+pdf2img -i document.pdf -o ./output -d 150 --refresh-every 25 --pool-size 4 --retry -v
 ```
-Combina:
-- `--refresh-every 25`: Refresca WASM frecuentemente
-- `--pool-size 4`: Más recursos
-- `--retry`: Reintenta con DPI reducido
-- `-v`: Ve qué pasa en detalle
+Combines:
+- `--refresh-every 25`: Refreshes WASM frequently
+- `--pool-size 4`: More resources
+- `--retry`: Retries with reduced DPI
+- `-v`: See what happens in detail
 
-### Procesar en bloques (para PDFs de 300+ páginas)
+### Process in blocks (for 300+ page PDFs)
 ```bash
-# Bloque 1
-pdf2img -i documento.pdf -o ./output --start 1 --end 75 -d 150 --refresh-every 50
+# Block 1
+pdf2img -i document.pdf -o ./output --start 1 --end 75 -d 150 --refresh-every 50
 
-# Bloque 2
-pdf2img -i documento.pdf -o ./output --start 76 --end 150 -d 150 --refresh-every 50
+# Block 2
+pdf2img -i document.pdf -o ./output --start 76 --end 150 -d 150 --refresh-every 50
 
-# Bloque 3
-pdf2img -i documento.pdf -o ./output --start 151 --end 225 -d 150 --refresh-every 50
+# Block 3
+pdf2img -i document.pdf -o ./output --start 151 --end 225 -d 150 --refresh-every 50
 
-# Bloque 4
-pdf2img -i documento.pdf -o ./output --start 226 --end 300 -d 150 --refresh-every 50
+# Block 4
+pdf2img -i document.pdf -o ./output --start 226 --end 300 -d 150 --refresh-every 50
 ```
-Procesar en bloques reduce problemas de memoria con PDFs muy grandes.
+Processing in blocks reduces memory issues with very large PDFs.
 
-### PDF grande con calidad variable
+### Large PDF with variable quality
 ```bash
-# Páginas normales con DPI standard
-pdf2img -i documento.pdf -o ./output --start 1 --end 50 -d 150
+# Normal pages with standard DPI
+pdf2img -i document.pdf -o ./output --start 1 --end 50 -d 150
 
-# Páginas con gráficos con mayor DPI
-pdf2img -i documento.pdf -o ./output --start 51 --end 100 -d 300
-```
-
-## Consejos de rendimiento
-
-### Si es lento:
-```bash
-# Reducir DPI
-pdf2img -i documento.pdf -o ./output -d 96
-
-# O especificar solo rango necesario
-pdf2img -i documento.pdf -o ./output --start 1 --end 10
+# Pages with graphics at higher DPI
+pdf2img -i document.pdf -o ./output --start 51 --end 100 -d 300
 ```
 
-### Si fallan páginas:
-```bash
-# Usar retry automático
-pdf2img -i documento.pdf -o ./output --retry
+## Performance tips
 
-# O aumentar refresh
-pdf2img -i documento.pdf -o ./output --refresh-every 25
+### If it's slow:
+```bash
+# Reduce DPI
+pdf2img -i document.pdf -o ./output -d 96
+
+# Or specify only the needed range
+pdf2img -i document.pdf -o ./output --start 1 --end 10
 ```
 
-### Si usa mucha memoria:
+### If pages fail:
 ```bash
-# Reducir pool size y aumentar refresh
-pdf2img -i documento.pdf -o ./output --pool-size 1 --refresh-every 25
+# Use automatic retry
+pdf2img -i document.pdf -o ./output --retry
+
+# Or increase refresh
+pdf2img -i document.pdf -o ./output --refresh-every 25
 ```
 
-## Usar como servidor MCP
+### If it uses too much memory:
+```bash
+# Reduce pool size and increase refresh
+pdf2img -i document.pdf -o ./output --pool-size 1 --refresh-every 25
+```
 
-### Opción HTTP (puerto 8080)
+## Use as an MCP server
+
+### HTTP option (port 8080)
 
 ```bash
 mcp-server
-# Servidor en: http://localhost:8080
+# Server at: http://localhost:8080
 
-# En otra terminal:
+# In another terminal:
 curl http://localhost:8080/tools
 ```
 
-### Opción stdio (integración con Claude)
+### stdio option (integration with your MCP client)
 
 ```bash
 mcp-server --stdio
 ```
 
-## Documentación completa
+## Complete documentation
 
-- [README.md](README.md) - Documentación completa
-- [EXAMPLES.md](EXAMPLES.md) - Ejemplos detallados
-- [DEVELOPMENT.md](DEVELOPMENT.md) - Guía para desarrolladores
+- [README.md](README.md) - Complete documentation
+- [EXAMPLES.md](EXAMPLES.md) - Detailed examples
+- [DEVELOPMENT.md](DEVELOPMENT.md) - Developer guide
 
-## Problemas comunes
+## Common problems
 
-| Problema | Solución |
+| Problem | Solution |
 |----------|----------|
-| `command not found: pdf2img` | Asegúrate de estar en el directorio del proyecto o instalar globalmente con `--global` |
-| PDFium no se descarga | Ejecuta `go mod download` |
-| Las imágenes se ven borrosas | Aumenta DPI: `-d 300` |
-| El proceso es lento | Reduce DPI: `-d 96` o especifica un rango: `--start 1 --end 10` |
-| `file not found` | Verifica que el PDF existe: `ls documento.pdf` |
+| `command not found: pdf2img` | Make sure you're in the project directory or install globally with `--global` |
+| PDFium not downloading | Run `go mod download` |
+| Images look blurry | Increase DPI: `-d 300` |
+| The process is slow | Reduce DPI: `-d 96` or specify a range: `--start 1 --end 10` |
+| `file not found` | Verify the PDF exists: `ls document.pdf` |
 
-## Próximos pasos
+## Next steps
 
-1. ✅ **Primeros pasos**: Convertir tu primer PDF
-2. 📖 **Aprender más**: Lee [EXAMPLES.md](EXAMPLES.md)
-3. 🔧 **Personalizar**: Ajusta DPI, formato y opciones
-4. 🌐 **Integrar**: Usa como servidor MCP o en tu código Go
-5. 🚀 **Contribuir**: ¡Las PRs son bienvenidas!
+1. ✅ **Getting started**: Convert your first PDF
+2. 📖 **Learn more**: Read [EXAMPLES.md](EXAMPLES.md)
+3. 🔧 **Customize**: Adjust DPI, format, and options
+4. 🌐 **Integrate**: Use as an MCP server or in your Go code
+5. 🚀 **Contribute**: PRs are welcome!
 
-## Ayuda
+## Help
 
 ```bash
 pdf2img --help
@@ -355,4 +326,4 @@ mcp-server --help
 
 ---
 
-**¿Preguntas?** Ver [README.md](README.md) para documentación completa.
+**Questions?** See [README.md](README.md) for complete documentation.

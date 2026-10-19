@@ -1,343 +1,339 @@
-# 🔧 Troubleshooting - MCP Server con Claude Desktop
+# 🔧 Troubleshooting - MCP Server with your MCP client
 
-Guía para resolver problemas comunes cuando configuras pdf2img con Claude Desktop.
+Guide to solving common problems when you configure pdf2img with your MCP client.
 
 ---
 
-## ✅ Verificación Previa (Antes de Continuar)
+## ✅ Pre-check (Before You Continue)
 
-Antes de intentar resolver problemas, verifica estos puntos:
+Before troubleshooting, verify these points:
 
-### 1. MCP Server compilado
+### 1. MCP Server compiled
 ```bash
-# Desde la raíz del proyecto
+# From the project root
 ls -la mcp-server.exe
-# Debería tener ~18 MB
+# Should be ~18 MB
 ```
 
-### 2. Archivo de configuración correcto
+### 2. Correct configuration file
 ```bash
-# Abre el archivo (Windows)
-%APPDATA%\Claude\claude_desktop_config.json
+# Open your client's MCP configuration file (the path varies by client)
 
-# Verifica que veas algo como:
+# Verify that you see something like:
 {
-  "mcpServers": {
-    "pdf2img": {
-      "command": "C:\\ruta\\a\\mcp-server.exe",
-      "args": ["--stdio"]
+    "mcpServers": {
+        "pdf2img": {
+            "command": "C:\\ruta\\a\\mcp-server.exe",
+            "args": ["--stdio"]
+        }
     }
-  }
 }
 ```
 
-### 3. Ruta correcta
-- ✅ Usa la ruta **COMPLETA** a `mcp-server.exe`
-- ✅ Reemplaza `C:\ruta\a` con tu ruta real
-- ❌ NO uses rutas relativas como `./mcp-server.exe`
-- ❌ NO uses `~` (tilde) en Windows
+### 3. Correct path
+- ✅ Use the **FULL** path to `mcp-server.exe`
+- ✅ Replace `C:\ruta\a` with your real path
+- ❌ DO NOT use relative paths like `./mcp-server.exe`
+- ❌ DO NOT use `~` (tilde) in Windows
 
-### 4. Archivo guardado
-Después de editar `claude_desktop_config.json`:
-- Presiona Ctrl+S
-- Cierra el editor
-- Verifica que el archivo tenga los cambios
+### 4. File saved
+After editing your client's MCP configuration file:
+- Press Ctrl+S
+- Close the editor
+- Verify that the file has the changes
 
 ---
 
-## 🐛 Problemas Comunes y Soluciones
+## 🐛 Common Problems and Solutions
 
-### Problema 1: "pdf2img no aparece conectado"
+### Problem 1: "pdf2img does not appear connected"
 
-**Síntomas**:
-- No ves "pdf2img" en la esquina inferior de Claude Desktop
-- O ves "pdf2img" pero con estado "desconectado"
+**Symptoms**:
+- You don't see "pdf2img" in your MCP client
+- Or you see "pdf2img" but with status "disconnected"
 
-**Soluciones** (en orden):
+**Solutions** (in order):
 
-1. **Reinicia Claude Desktop completamente**
-   ```bash
-   # Cierra todas las ventanas de Claude Desktop
-   taskkill /F /IM claude.exe
-   # Espera 2 segundos
-   # Abre Claude Desktop nuevamente
-   ```
+1. **Restart your MCP client completely**
+    ```bash
+    # Close all windows of your MCP client
+    # Wait 2 seconds
+    # Open your MCP client again
+    ```
 
-2. **Verifica la configuración nuevamente**
-   ```json
-   // ✅ Correcto
-   {
-     "command": "C:\\Users\\DAVID\\Projects\\pdf2img\\mcp-server.exe",
-     "args": ["--stdio"]
-   }
+2. **Verify the configuration again**
+    ```json
+    // ✅ Correct
+    {
+        "command": "C:\\Users\\DAVID\\Projects\\pdf2img\\mcp-server.exe",
+        "args": ["--stdio"]
+    }
 
-   // ❌ Incorrecto
-   {
-     "command": "mcp-server.exe",  // Falta ruta completa
-     "args": ["--stdio"]
-   }
-   ```
+    // ❌ Incorrect
+    {
+        "command": "mcp-server.exe",   // Missing full path
+        "args": ["--stdio"]
+    }
+    ```
 
-3. **Prueba el servidor manualmente**
-   ```bash
-   cd C:\ruta\a\tu\proyecto
-   mcp-server.exe --stdio
-   # Debería decir: "MCP Server running in stdio mode"
-   # Presiona Ctrl+C para salir
-   ```
+3. **Test the server manually**
+    ```bash
+    cd C:\ruta\a\tu\proyecto
+    mcp-server.exe --stdio
+    # Should say: "MCP Server running in stdio mode"
+    # Press Ctrl+C to exit
+    ```
 
-4. **Busca errores en el log**
-   - En Claude Desktop, ve a Settings (⚙️) → Developer
-   - Busca mensajes de error en rojo
-   - Copia los mensajes de error exactos
+4. **Look for errors in the log**
+    - In your MCP client, open the configuration/developer section (varies by client)
+    - Look for error messages in red
+    - Copy the exact error messages
 
-### Problema 2: "MCP Server connection failed"
+### Problem 2: "MCP Server connection failed"
 
-**Síntomas**:
-- Ves un error de conexión
-- El servidor no responde a Claude
+**Symptoms**:
+- You see a connection error
+- The server does not respond to your MCP client
 
-**Soluciones**:
+**Solutions**:
 
-1. **Verifica que el archivo existe**
-   ```bash
-   dir "C:\ruta\exacta\mcp-server.exe"
-   # Si no existe, compila nuevamente:
-   cd C:\tu\proyecto
-   go build -o mcp-server.exe ./cmd/mcp-server
-   ```
+1. **Verify that the file exists**
+    ```bash
+    dir "C:\ruta\exacta\mcp-server.exe"
+    # If it does not exist, compile again:
+    cd C:\tu\proyecto
+    go build -o mcp-server.exe ./cmd/mcp-server
+    ```
 
-2. **Verifica permisos**
-   - Click derecho en `mcp-server.exe`
-   - Propiedades → General
-   - ¿Hay algún botón "Desbloquear"?
-   - Si sí, haz click en Desbloquear
-   - Haz click en OK
-   - Reinicia Claude Desktop
+2. **Verify permissions**
+    - Right-click on `mcp-server.exe`
+    - Properties → General
+    - Is there an "Unlock" button?
+    - If so, click Unlock
+    - Click OK
+    - Restart your MCP client
 
-3. **Verifica que Go está instalado**
-   ```bash
-   go version
-   # Debería mostrar algo como: go version go1.21.5 windows/amd64
-   ```
+3. **Verify that Go is installed**
+    ```bash
+    go version
+    # Should show something like: go version go1.21.5 windows/amd64
+    ```
 
-### Problema 3: "JSON-RPC errors" en los logs
+### Problem 3: "JSON-RPC errors" in the logs
 
-**Síntomas**:
-- En los logs ves errores de "invalid_literal", "Unrecognized key(s)"
-- El servidor responde pero Claude no acepta las respuestas
+**Symptoms**:
+- In the logs you see "invalid_literal", "Unrecognized key(s)" errors
+- The server responds but your MCP client does not accept the responses
 
-**✅ SOLUCIONADO EN v2.0.0**:
-El servidor ahora usa `github.com/mark3labs/mcp-go` (SDK oficial) que implementa correctamente JSON-RPC 2.0.
+**✅ FIXED IN v2.0.0**:
+The server now uses `github.com/mark3labs/mcp-go` (official SDK) that correctly implements JSON-RPC 2.0.
 
-**Qué cambió**:
+**What changed**:
 ```
-❌ Antes: Implementación manual de JSON-RPC 2.0
-✅ Ahora: SDK oficial que maneja todo el protocolo automáticamente
+❌ Before: Manual JSON-RPC 2.0 implementation
+✅ Now: Official SDK that handles the whole protocol automatically
 ```
 
-**Para obtener la versión corregida**:
+**To get the fixed version**:
 ```bash
 cd C:\tu\proyecto
 go build -o mcp-server.exe ./cmd/mcp-server
-taskkill /F /IM claude.exe
-# Abre Claude Desktop nuevamente
+# Open your MCP client again
 ```
 
-**Si aún ves errores**:
-- Verifica que compilaste la última versión (timestamp reciente)
-- Ejecuta `go mod tidy` si hay problemas de compilación
-- Reporta el error exacto del log con los detalles completos
+**If you still see errors**:
+- Verify that you compiled the latest version (recent timestamp)
+- Run `go mod tidy` if there are compilation problems
+- Report the exact log error with full details
 
-### Problema 4: "Tool execution error" en Claude
+### Problem 4: "Tool execution error" in your MCP client
 
-**Síntomas**:
-- Claude conecta al MCP
-- Ves las herramientas disponibles
-- Pero al usar una herramienta, sale error
+**Symptoms**:
+- Your MCP client connects to the server
+- You see the available tools
+- But when using a tool, an error appears
 
-**Causas y soluciones**:
+**Causes and solutions**:
 
-1. **Ruta del PDF incorrecta**
-   ```
-   ❌ "documento.pdf"  (ruta relativa)
-   ✅ "C:\Users\DAVID\Documents\documento.pdf"  (ruta absoluta)
-   ```
+1. **Incorrect PDF path**
+    ```
+    ❌ "document.pdf"   (relative path)
+    ✅ "C:\Users\DAVID\Documents\document.pdf"   (absolute path)
+    ```
 
-2. **Directorio de salida no existe**
-   - El servidor debería crearlo automáticamente
-   - Pero verifica que tienes permisos de escritura en ese directorio
+2. **Output directory does not exist**
+    - The server should create it automatically
+    - But verify that you have write permissions in that directory
 
-3. **Archivo PDF corrupto**
-   ```bash
-   # Prueba con el PDF de ejemplo
-   # Desde Claude: "¿Cuántas páginas tiene example.pdf?"
-   ```
+3. **Corrupt PDF file**
+    ```bash
+    # Try with the example PDF
+    # From your AI assistant: "How many pages does example.pdf have?"
+    ```
 
-4. **DPI demasiado alto**
-   - Si usas DPI > 300, puede haber problemas de memoria
-   - Intenta con DPI más bajo (150 o 200)
+4. **DPI too high**
+    - If you use DPI > 300, there may be memory problems
+    - Try a lower DPI (150 or 200)
 
-### Problema 5: "File not found"
+### Problem 5: "File not found"
 
-**Síntomas**:
+**Symptoms**:
 - Error: "input file not found"
-- O: "PDF file not found"
+- Or: "PDF file not found"
 
-**Soluciones**:
+**Solutions**:
 
-1. **Verifica que el archivo existe**
-   ```bash
-   ls "C:\Users\DAVID\Documents\documento.pdf"
-   ```
+1. **Verify that the file exists**
+    ```bash
+    ls "C:\Users\DAVID\Documents\document.pdf"
+    ```
 
-2. **Usa ruta absoluta**
-   - Pregunta a Claude: "Usa la ruta completa: C:\Users\DAVID\Documents\documento.pdf"
+2. **Use absolute path**
+    - Ask your AI assistant: "Use the full path: C:\Users\DAVID\Documents\document.pdf"
 
-3. **Verifica permisos**
-   - El archivo debe ser legible
-   - No debe estar abierto en otro programa
+3. **Verify permissions**
+    - The file must be readable
+    - It must not be open in another program
 
-### Problema 6: "Timeout" o "Server not responding"
+### Problem 6: "Timeout" or "Server not responding"
 
-**Síntomas**:
-- Claude inicia la operación pero nunca responde
-- Después de esperar, sale timeout
+**Symptoms**:
+- Your AI assistant starts the operation but never responds
+- After waiting, a timeout occurs
 
-**Soluciones**:
+**Solutions**:
 
-1. **Verifica que el servidor está corriendo**
-   ```bash
-   tasklist | findstr mcp-server
-   # Debería mostrar: mcp-server.exe ...
-   ```
+1. **Verify that the server is running**
+    ```bash
+    tasklist | findstr mcp-server
+    # Should show: mcp-server.exe ...
+    ```
 
-2. **Reinicia Claude Desktop**
-   ```bash
-   taskkill /F /IM claude.exe
-   # Espera 3 segundos
-   # Abre Claude Desktop nuevamente
-   ```
+2. **Restart your MCP client**
+     ```bash
+     # Wait 3 seconds
+     # Open your MCP client again
+     ```
 
-3. **Verifica que el PDF no es muy grande**
-   - PDFs > 50 MB pueden tomar tiempo
-   - Intenta con un PDF más pequeño
-
----
-
-## 📊 Checklist de Diagnóstico
-
-Si nada funciona, ve por este checklist:
-
-- [ ] ¿Compilé el `mcp-server.exe` correctamente?
-  ```bash
-  go build -o mcp-server.exe ./cmd/mcp-server
-  ```
-
-- [ ] ¿El archivo `mcp-server.exe` existe?
-  ```bash
-  ls -lh mcp-server.exe
-  ```
-
-- [ ] ¿La configuración en Claude Desktop es correcta?
-  - Ruta completa (no relativa)
-  - Sin caracteres especiales
-  - `"args": ["--stdio"]` exacto
-
-- [ ] ¿Reinicié Claude Desktop después de cambiar config?
-  ```bash
-  taskkill /F /IM claude.exe
-  ```
-
-- [ ] ¿El servidor funciona manualmente?
-  ```bash
-  mcp-server.exe --stdio
-  ```
-
-- [ ] ¿Veo "pdf2img" en la esquina de Claude Desktop?
-  - Esquina inferior derecha
-  - O Settings → Developer → MCP Servers
-
-- [ ] ¿Puedo listar herramientas en Claude?
-  - Pregunta: "¿Qué herramientas tengo disponibles?"
-  - Debería mencionar `pdf_info` y `pdf_to_images`
-
-- [ ] ¿Puedo usar `pdf_info`?
-  - Pregunta: "¿Cuántas páginas tiene example.pdf?"
-  - Debería retornar: "1 page"
+3. **Verify that the PDF is not too large**
+    - PDFs > 50 MB may take time
+    - Try a smaller PDF
 
 ---
 
-## 🆘 Cuando Nada Funciona
+## 📊 Diagnostic Checklist
 
-Si ya probaste todo, aquí está qué reportar:
+If nothing works, go through this checklist:
 
-1. **Abre una terminal**
+- [ ] Did I compile `mcp-server.exe` correctly?
    ```bash
-   cd C:\tu\proyecto
-   mcp-server.exe --stdio
+    go build -o mcp-server.exe ./cmd/mcp-server
    ```
 
-2. **Toma screenshot de:**
-   - La salida del servidor
-   - El log de Claude Desktop (Settings → Developer)
+- [ ] Does the `mcp-server.exe` file exist?
+   ```bash
+    ls -lh mcp-server.exe
+   ```
 
-3. **Incluye información de:**
-   - Sistema operativo: `ver` (en Windows)
-   - Versión de Go: `go version`
-   - Ruta del proyecto: `cd` (mostrar en terminal)
+- [ ] Is the configuration in your MCP client correct?
+   - Full path (not relative)
+   - No special characters
+   - `"args": ["--stdio"]` exact
 
-4. **Crea un issue en GitHub**
-   - Incluye todo lo anterior
-   - Describe qué probaste
-   - Incluye mensajes de error exactos
+- [ ] Did I restart my MCP client after changing config?
+     ```bash
+     # Close and reopen your MCP client
+     ```
+
+- [ ] Does the server work manually?
+   ```bash
+    mcp-server.exe --stdio
+   ```
+
+- [ ] Do I see "pdf2img" in my MCP client?
+   - Check the list of MCP servers
+   - Or the configuration/developer section
+
+- [ ] Can I list tools in my AI assistant?
+   - Ask: "What tools do I have available?"
+   - Should mention `pdf_info` and `pdf_to_images`
+
+- [ ] Can I use `pdf_info`?
+   - Ask: "How many pages does example.pdf have?"
+   - Should return: "1 page"
 
 ---
 
-## 📝 Logs Útiles
+## 🆘 When Nothing Works
 
-### Ver logs del servidor en tiempo real
+If you have already tried everything, here is what to report:
+
+1. **Open a terminal**
+    ```bash
+    cd C:\tu\proyecto
+    mcp-server.exe --stdio
+    ```
+
+2. **Take a screenshot of:**
+    - The server output
+    - Your MCP client's log
+
+3. **Include information about:**
+    - Operating system: `ver` (on Windows)
+    - Go version: `go version`
+    - Project path: `cd` (show in terminal)
+
+4. **Create an issue on GitHub**
+    - Include everything above
+    - Describe what you tried
+    - Include exact error messages
+
+---
+
+## 📝 Useful Logs
+
+### View server logs in real time
 ```bash
-# Terminal 1: Inicia el servidor
+# Terminal 1: Start the server
 mcp-server.exe --stdio
 
-# Terminal 2: Intenta usar desde Claude
-# (Ve los logs en Terminal 1)
+# Terminal 2: Try using from your AI assistant
+# (See the logs in Terminal 1)
 ```
 
-### Guardar logs para análisis
+### Save logs for analysis
 ```bash
-# Redirige stderr a un archivo
+# Redirect stderr to a file
 mcp-server.exe --stdio 2> mcp-errors.log
 
-# Luego abre el archivo
+# Then open the file
 cat mcp-errors.log
 ```
 
 ---
 
-## ✅ Verificación Exitosa
+## ✅ Successful Verification
 
-Cuando funciona, verás:
+When it works, you will see:
 
-1. **En Claude Desktop**
-   - ✓ "pdf2img" conectado en la esquina
-   - ✓ Sin errores rojos en Settings → Developer
+1. **In your MCP client**
+    - ✓ "pdf2img" appears connected
+    - ✓ No red errors in the logs
 
-2. **Al usar una herramienta**
-   - ✓ Claude inicia la operación
-   - ✓ La herramienta se ejecuta
-   - ✓ Ves el resultado en menos de 10 segundos
+2. **When using a tool**
+    - ✓ Your AI assistant starts the operation
+    - ✓ The tool executes
+    - ✓ You see the result in less than 10 seconds
 
-3. **En el log del servidor**
-   ```
-   ✓ Server started and connected successfully
-   ✓ Received method: initialize
-   ✓ Received method: tools/list
-   ✓ Received method: tools/call
-   ```
+3. **In the server log**
+    ```
+    ✓ Server started and connected successfully
+    ✓ Received method: initialize
+    ✓ Received method: tools/list
+    ✓ Received method: tools/call
+    ```
 
 ---
 
-**Última actualización**: 2025-11-07
-**Versión**: 1.0.0
+**Last updated**: 2025-11-07
+**Version**: 1.0.0

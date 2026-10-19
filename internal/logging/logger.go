@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-// Logger es la interfaz centralizada para logging.
+// Logger is the centralized interface for logging.
 type Logger interface {
 	Debug(msg string, attrs ...slog.Attr)
 	Info(msg string, attrs ...slog.Attr)
@@ -14,12 +14,12 @@ type Logger interface {
 	Error(msg string, err error, attrs ...slog.Attr)
 }
 
-// SlogLogger es una implementación de Logger usando slog.
+// SlogLogger is an implementation of Logger using slog.
 type SlogLogger struct {
 	logger *slog.Logger
 }
 
-// New crea un nuevo logger con el nivel especificado.
+// New creates a new logger with the specified level.
 func New(level string) *SlogLogger {
 	var logLevel slog.Level
 	switch level {
@@ -42,7 +42,7 @@ func New(level string) *SlogLogger {
 	return &SlogLogger{logger: logger}
 }
 
-// NewJSON crea un logger con formato JSON.
+// NewJSON creates a logger with JSON format.
 func NewJSON(level string) *SlogLogger {
 	var logLevel slog.Level
 	switch level {
@@ -65,22 +65,22 @@ func NewJSON(level string) *SlogLogger {
 	return &SlogLogger{logger: logger}
 }
 
-// Debug registra un mensaje de nivel DEBUG.
+// Debug logs a DEBUG-level message.
 func (l *SlogLogger) Debug(msg string, attrs ...slog.Attr) {
 	l.logger.LogAttrs(context.Background(), slog.LevelDebug, msg, attrs...)
 }
 
-// Info registra un mensaje de nivel INFO.
+// Info logs an INFO-level message.
 func (l *SlogLogger) Info(msg string, attrs ...slog.Attr) {
 	l.logger.LogAttrs(context.Background(), slog.LevelInfo, msg, attrs...)
 }
 
-// Warn registra un mensaje de nivel WARN.
+// Warn logs a WARN-level message.
 func (l *SlogLogger) Warn(msg string, attrs ...slog.Attr) {
 	l.logger.LogAttrs(context.Background(), slog.LevelWarn, msg, attrs...)
 }
 
-// Error registra un mensaje de nivel ERROR con error adjunto.
+// Error logs an ERROR-level message with an attached error.
 func (l *SlogLogger) Error(msg string, err error, attrs ...slog.Attr) {
 	if err != nil {
 		attrs = append(attrs, slog.Any("error", err))

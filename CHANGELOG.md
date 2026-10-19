@@ -64,12 +64,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Graceful degradation when refresh fails
 
 ### Planned
-- [ ] OCR de imágenes renderizadas
-- [ ] Procesamiento paralelo de páginas
-- [ ] Caché de imágenes renderizadas
-- [ ] API HTTP REST
-- [ ] Soporte para PDF con contraseña
-- [ ] Soporte para marcas de agua
+- [ ] OCR of rendered images
+- [ ] Parallel page processing
+- [ ] Cache of rendered images
+- [ ] HTTP REST API
+- [ ] Support for password-protected PDFs
+- [ ] Support for watermarks
 - [ ] Docker image
 
 ---
@@ -192,7 +192,7 @@ To upgrade to a newer version:
 
 ```bash
 # Download latest source
-git clone https://github.com/tu-usuario/pdf2img
+git clone https://github.com/scopweb/mcp-go-pdf-to-img
 cd pdf2img
 
 # Build locally

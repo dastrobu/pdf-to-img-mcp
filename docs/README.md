@@ -1,144 +1,144 @@
-# 📚 Documentación Interna - PDF2IMG
+# 📚 Internal Documentation - PDF2IMG
 
-Esta carpeta contiene documentación interna del proyecto. Para documentación de usuario, ver el [README.md](../README.md) raíz.
+This folder contains internal documentation for the project. For user documentation, see the root [README.md](../README.md).
 
 ---
 
-## 📖 Índice de Documentación Interna
+## 📖 Internal Documentation Index
 
-### 🎯 Para Empezar
-- **[SUMMARY.md](SUMMARY.md)** - Resumen ejecutivo del proyecto
-- **[IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md)** - Notas técnicas de implementación
+### 🎯 Getting Started
+- **[SUMMARY.md](SUMMARY.md)** - Executive summary of the project
+- **[IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md)** - Technical implementation notes
 
-### 📊 Estado y Calidad
-- **[STATUS.md](STATUS.md)** - Estado del proyecto, checklist de completitud
-- **[SECURITY_TEST_RESULTS.md](SECURITY_TEST_RESULTS.md)** - Resultados de tests de seguridad (19/19 ✅)
-- **[DEPENDENCIES_UPDATE.md](DEPENDENCIES_UPDATE.md)** - Historial de actualización de dependencias
+### 📊 Status and Quality
+- **[STATUS.md](STATUS.md)** - Project status, completeness checklist
+- **[SECURITY_TEST_RESULTS.md](SECURITY_TEST_RESULTS.md)** - Security test results (19/19 ✅)
+- **[DEPENDENCIES_UPDATE.md](DEPENDENCIES_UPDATE.md)** - Dependency update history
 
 ### 🏆 GitHub & Best Practices
-- **[GITHUB_BEST_PRACTICES.md](GITHUB_BEST_PRACTICES.md)** - Análisis de GitHub best practices
-- **[GITHUB_IMPLEMENTATION_SUMMARY.md](GITHUB_IMPLEMENTATION_SUMMARY.md)** - Resumen de implementación de best practices
+- **[GITHUB_BEST_PRACTICES.md](GITHUB_BEST_PRACTICES.md)** - GitHub best practices analysis
+- **[GITHUB_IMPLEMENTATION_SUMMARY.md](GITHUB_IMPLEMENTATION_SUMMARY.md)** - Best practices implementation summary
 
-### 📈 Resumen Final
-- **[FINAL_SUMMARY.md](FINAL_SUMMARY.md)** - Resumen completo del proyecto
+### 📈 Final Summary
+- **[FINAL_SUMMARY.md](FINAL_SUMMARY.md)** - Complete project summary
 
 ---
 
-## 📂 Estructura de Documentación
+## 📂 Documentation Structure
 
 ```
 pdf2img/
-├── docs/                              # Documentación interna
-│   ├── README.md                      # Este archivo
-│   ├── SUMMARY.md                     # Resumen ejecutivo
-│   ├── IMPLEMENTATION_NOTES.md        # Notas técnicas
-│   ├── STATUS.md                      # Estado del proyecto
-│   ├── SECURITY_TEST_RESULTS.md       # Tests de seguridad
-│   ├── DEPENDENCIES_UPDATE.md         # Actualización de deps
-│   ├── GITHUB_BEST_PRACTICES.md       # Análisis de best practices
-│   └── GITHUB_IMPLEMENTATION_SUMMARY.md # Implementación de best practices
+├── docs/                               # Internal documentation
+│   ├── README.md                       # This file
+│   ├── SUMMARY.md                      # Executive summary
+│   ├── IMPLEMENTATION_NOTES.md         # Technical notes
+│   ├── STATUS.md                       # Project status
+│   ├── SECURITY_TEST_RESULTS.md        # Security tests
+│   ├── DEPENDENCIES_UPDATE.md          # Dependency updates
+│   ├── GITHUB_BEST_PRACTICES.md        # Best practices analysis
+│   └── GITHUB_IMPLEMENTATION_SUMMARY.md # Best practices implementation
 │
-├── README.md                          # Documentación principal para usuarios
-├── QUICKSTART.md                      # Inicio rápido (5 minutos)
-├── EXAMPLES.md                        # Casos prácticos
-├── DEVELOPMENT.md                     # Guía de desarrollo
-├── PROJECT_STRUCTURE.md               # Estructura del código
-├── CONTRIBUTING.md                    # Cómo contribuir
-├── CODE_OF_CONDUCT.md                 # Código de conducta
-├── SECURITY.md                        # Política de seguridad
-├── CHANGELOG.md                       # Historial de cambios
-├── LICENSE                            # Apache 2.0
-└── WELCOME.md                         # Bienvenida al proyecto
+├── README.md                           # Main documentation for users
+├── QUICKSTART.md                       # Quick start (5 minutes)
+├── EXAMPLES.md                         # Practical examples
+├── DEVELOPMENT.md                      # Development guide
+├── PROJECT_STRUCTURE.md                # Code structure
+├── CONTRIBUTING.md                     # How to contribute
+├── CODE_OF_CONDUCT.md                  # Code of conduct
+├── SECURITY.md                         # Security policy
+├── CHANGELOG.md                        # Change history
+├── LICENSE                             # Apache 2.0
+└── WELCOME.md                          # Welcome to the project
 ```
 
 ---
 
-## 🎯 Cuándo Leer Cada Documento
+## 🎯 When to Read Each Document
 
-### Para Usuarios Nuevos
-1. Lee [README.md](../README.md) - Qué es PDF2IMG
-2. Lee [QUICKSTART.md](../QUICKSTART.md) - Cómo empezar (5 min)
-3. Lee [EXAMPLES.md](../EXAMPLES.md) - Ejemplos de uso
+### For New Users
+1. Read [README.md](../README.md) - What PDF2IMG is
+2. Read [QUICKSTART.md](../QUICKSTART.md) - How to get started (5 min)
+3. Read [EXAMPLES.md](../EXAMPLES.md) - Usage examples
 
-### Para Desarrolladores
-1. Lee [DEVELOPMENT.md](../DEVELOPMENT.md) - Setup de desarrollo
-2. Lee [PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md) - Estructura del código
-3. Lee [IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md) - Detalles técnicos
-4. Lee [STATUS.md](STATUS.md) - Estado del proyecto
+### For Developers
+1. Read [DEVELOPMENT.md](../DEVELOPMENT.md) - Development setup
+2. Read [PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md) - Code structure
+3. Read [IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md) - Technical details
+4. Read [STATUS.md](STATUS.md) - Project status
 
-### Para Revisiones de Seguridad
-1. Lee [SECURITY.md](../SECURITY.md) - Política de seguridad
-2. Lee [SECURITY_TEST_RESULTS.md](SECURITY_TEST_RESULTS.md) - Resultados de tests
-3. Lee [DEPENDENCIES_UPDATE.md](DEPENDENCIES_UPDATE.md) - Dependencias
+### For Security Reviews
+1. Read [SECURITY.md](../SECURITY.md) - Security policy
+2. Read [SECURITY_TEST_RESULTS.md](SECURITY_TEST_RESULTS.md) - Test results
+3. Read [DEPENDENCIES_UPDATE.md](DEPENDENCIES_UPDATE.md) - Dependencies
 
-### Para GitHub/Open Source
-1. Lee [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) - Código de conducta
-2. Lee [CONTRIBUTING.md](../CONTRIBUTING.md) - Cómo contribuir
-3. Lee [GITHUB_BEST_PRACTICES.md](GITHUB_BEST_PRACTICES.md) - Best practices
-4. Lee [CHANGELOG.md](../CHANGELOG.md) - Historial de versiones
+### For GitHub/Open Source
+1. Read [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) - Code of conduct
+2. Read [CONTRIBUTING.md](../CONTRIBUTING.md) - How to contribute
+3. Read [GITHUB_BEST_PRACTICES.md](GITHUB_BEST_PRACTICES.md) - Best practices
+4. Read [CHANGELOG.md](../CHANGELOG.md) - Release history
 
-### Para Auditoría de Proyecto
-1. Lee [FINAL_SUMMARY.md](FINAL_SUMMARY.md) - Resumen completo
-2. Lee [STATUS.md](STATUS.md) - Checklist de completitud
-3. Lee [GITHUB_IMPLEMENTATION_SUMMARY.md](GITHUB_IMPLEMENTATION_SUMMARY.md) - Implementación
+### For Project Audits
+1. Read [FINAL_SUMMARY.md](FINAL_SUMMARY.md) - Complete summary
+2. Read [STATUS.md](STATUS.md) - Completeness checklist
+3. Read [GITHUB_IMPLEMENTATION_SUMMARY.md](GITHUB_IMPLEMENTATION_SUMMARY.md) - Implementation
 
 ---
 
-## 🔍 Búsqueda Rápida
+## 🔍 Quick Search
 
-### ¿Cómo empiezo?
+### How do I get started?
 → [README.md](../README.md) + [QUICKSTART.md](../QUICKSTART.md)
 
-### ¿Qué se cambió en v1.0.0?
+### What changed in v1.0.0?
 → [CHANGELOG.md](../CHANGELOG.md)
 
-### ¿Cuál es el estado del proyecto?
+### What is the project status?
 → [STATUS.md](STATUS.md)
 
-### ¿Cómo configuro mi ambiente de desarrollo?
+### How do I set up my development environment?
 → [DEVELOPMENT.md](../DEVELOPMENT.md)
 
-### ¿Cómo contribuyo?
+### How do I contribute?
 → [CONTRIBUTING.md](../CONTRIBUTING.md)
 
-### ¿Cómo reporte un problema de seguridad?
+### How do I report a security issue?
 → [SECURITY.md](../SECURITY.md)
 
-### ¿Cuáles son los tests de seguridad?
+### What are the security tests?
 → [SECURITY_TEST_RESULTS.md](SECURITY_TEST_RESULTS.md)
 
-### ¿Cuál es la estructura del código?
+### What is the code structure?
 → [PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md)
 
-### ¿Qué dependencias tiene?
+### What dependencies does it have?
 → [DEPENDENCIES_UPDATE.md](DEPENDENCIES_UPDATE.md)
 
-### ¿Sigue GitHub best practices?
+### Does it follow GitHub best practices?
 → [GITHUB_IMPLEMENTATION_SUMMARY.md](GITHUB_IMPLEMENTATION_SUMMARY.md)
 
 ---
 
-## 📊 Resumen de Documentación
+## 📊 Documentation Summary
 
-| Documento | Tipo | Tamaño | Audiencia |
+| Document | Type | Size | Audience |
 |-----------|------|--------|-----------|
-| SUMMARY.md | Interno | 7.4 KB | Desarrolladores |
-| IMPLEMENTATION_NOTES.md | Interno | 4.6 KB | Desarrolladores técnicos |
-| STATUS.md | Interno | 7.1 KB | Auditoría/QA |
-| SECURITY_TEST_RESULTS.md | Interno | 9.2 KB | Security team |
-| DEPENDENCIES_UPDATE.md | Interno | 6.1 KB | DevOps/Maintenance |
-| GITHUB_BEST_PRACTICES.md | Interno | 12 KB | Maintainers |
-| GITHUB_IMPLEMENTATION_SUMMARY.md | Interno | 8.2 KB | Maintainers |
-| FINAL_SUMMARY.md | Interno | 7.0 KB | Ejecutivos/Auditoría |
+| SUMMARY.md | Internal | 7.4 KB | Developers |
+| IMPLEMENTATION_NOTES.md | Internal | 4.6 KB | Technical developers |
+| STATUS.md | Internal | 7.1 KB | Audit/QA |
+| SECURITY_TEST_RESULTS.md | Internal | 9.2 KB | Security team |
+| DEPENDENCIES_UPDATE.md | Internal | 6.1 KB | DevOps/Maintenance |
+| GITHUB_BEST_PRACTICES.md | Internal | 12 KB | Maintainers |
+| GITHUB_IMPLEMENTATION_SUMMARY.md | Internal | 8.2 KB | Maintainers |
+| FINAL_SUMMARY.md | Internal | 7.0 KB | Executives/Audit |
 
-**Total Documentación Interna**: ~61 KB
+**Total Internal Documentation**: ~61 KB
 
 ---
 
-## 🎯 Niveles de Documentación
+## 🎯 Documentation Levels
 
-### 📍 Nivel 1: Pública (Raíz)
-Documentación dirigida a usuarios y contribuyentes:
+### 📍 Level 1: Public (Root)
+Documentation aimed at users and contributors:
 - README.md
 - QUICKSTART.md
 - EXAMPLES.md
@@ -150,8 +150,8 @@ Documentación dirigida a usuarios y contribuyentes:
 - CHANGELOG.md
 - WELCOME.md
 
-### 📍 Nivel 2: Interna (/docs)
-Documentación técnica interna:
+### 📍 Level 2: Internal (/docs)
+Internal technical documentation:
 - IMPLEMENTATION_NOTES.md
 - STATUS.md
 - SECURITY_TEST_RESULTS.md
@@ -163,49 +163,49 @@ Documentación técnica interna:
 
 ---
 
-## ✅ Checklist de Documentación
+## ✅ Documentation Checklist
 
-- [x] Documentación de usuario clara
-- [x] Documentación de desarrollador completa
-- [x] Documentación de seguridad
-- [x] Documentación de proyecto
-- [x] Documentación de contribuciones
-- [x] Documentación interna organizada
-- [x] README en /docs para navegación
-- [x] Índice de archivos
-- [x] Búsqueda rápida
-
----
-
-## 🚀 Cómo Usar Este Directorio
-
-### Para Buscar Información
-1. Usa el índice arriba "Búsqueda Rápida"
-2. O revisa la tabla de contenidos
-
-### Para Actualizar Documentación
-1. Edita el archivo correspondiente en `/docs`
-2. Mantén la estructura consistente
-3. Actualiza este README si agregas archivos nuevos
-
-### Para Agregar Nuevos Documentos
-1. Crea el archivo en `/docs`
-2. Agrega una entrada en el índice arriba
-3. Actualiza la tabla de resumen
-4. Menciona en "Búsqueda Rápida" si es relevante
+- [x] Clear user documentation
+- [x] Complete developer documentation
+- [x] Security documentation
+- [x] Project documentation
+- [x] Contribution documentation
+- [x] Organized internal documentation
+- [x] README in /docs for navigation
+- [x] File index
+- [x] Quick search
 
 ---
 
-## 📝 Notas
+## 🚀 How to Use This Directory
 
-- Esta carpeta contiene documentación **interna** del proyecto
-- La documentación **pública** está en la raíz del repositorio
-- Mantén los archivos en `/docs` organizados y actualizados
-- Todos los archivos markdown deben seguir el estándar de GitHub
+### To Find Information
+1. Use the "Quick Search" index above
+2. Or review the table of contents
+
+### To Update Documentation
+1. Edit the corresponding file in `/docs`
+2. Keep the structure consistent
+3. Update this README if you add new files
+
+### To Add New Documents
+1. Create the file in `/docs`
+2. Add an entry in the index above
+3. Update the summary table
+4. Mention it in "Quick Search" if relevant
 
 ---
 
-**Última actualización**: 2025-11-07
-**Total Documentación**: ~190 KB (130 KB pública + 61 KB interna)
-**Archivos**: 23 documentos
-**Status**: ✅ Completamente documentado
+## 📝 Notes
+
+- This folder contains **internal** project documentation
+- **Public** documentation is at the repository root
+- Keep the files in `/docs` organized and up to date
+- All markdown files should follow the GitHub standard
+
+---
+
+**Last updated**: 2025-11-07
+**Total Documentation**: ~190 KB (130 KB public + 61 KB internal)
+**Files**: 23 documents
+**Status**: ✅ Fully documented

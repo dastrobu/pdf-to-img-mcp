@@ -16,27 +16,11 @@ A complete tool in Go to render PDF pages as PNG or JPG images. Includes both a 
 
 ## Installation
 
-### Prerequisites
-
-- **Go 1.27+**
-- **Note**: No external PDFium required, everything is embedded in the binary
-
-### From source code
+**Prerequisites:** Go 1.27+ (no external dependencies — everything is embedded in the binary).
 
 ```bash
-git clone <repository-url>
-cd pdf2img
-go mod download
-go build -o pdf2img .
+go install .
 ```
-
-### Global installation
-
-```bash
-go install github.com/scopweb/mcp-go-pdf-to-img@latest
-```
-
-**Note:** `go install .` (or the module install above) produces a binary named after the module (`mcp-go-pdf-to-img`), since the main package now lives in the repository root. To get a `pdf2img` binary, build with an explicit name: `go build -o pdf2img .`
 
 ## Usage
 
@@ -88,15 +72,15 @@ Height: 792.00 pt
 
 ### MCP Server
 
-The pdf2img MCP Server enables integration with Claude Desktop and other systems supporting the Model Context Protocol.
+The pdf2img MCP Server enables integration with any MCP client (for example Cursor, Zed, or Cline) and other systems supporting the Model Context Protocol.
 
-#### Configuration with Claude Desktop (Recommended)
+#### Integrating with an MCP client
 
-**⚡ Quick guide**: Read [MCP_CLAUDE_DESKTOP.md](MCP_CLAUDE_DESKTOP.md) for step-by-step instructions.
+**⚡ Quick guide**: Read [MCP.md](MCP.md) for step-by-step instructions.
 
 **Summary**:
 1. Compile: `go build -o mcp-server.exe ./cmd/mcp-server`
-2. Edit `claude_desktop_config.json` (in `%APPDATA%\Claude\`)
+2. Edit your MCP client's MCP configuration file
 3. Add:
 ```json
 {
@@ -108,8 +92,8 @@ The pdf2img MCP Server enables integration with Claude Desktop and other systems
   }
 }
 ```
-4. Restart Claude Desktop
-5. Done! Now you can use pdf2img from Claude
+4. Restart your MCP client
+5. Done! Now you can use pdf2img from your MCP client
 
 **Having issues?** Read [MCP_TROUBLESHOOTING.md](MCP_TROUBLESHOOTING.md) for troubleshooting common problems.
 
@@ -122,7 +106,7 @@ package main
 
 import (
 	"log"
-	"github.com/tu-usuario/pdf2img/mcp"
+	"github.com/scopweb/mcp-go-pdf-to-img/mcp"
 )
 
 func main() {
@@ -174,10 +158,10 @@ Gets PDF information (pages, size, dimensions).
 
 The MCP Server supports two modes:
 
-- **stdio** (default for Claude Desktop): `mcp-server --stdio`
+- **stdio** (default for MCP clients): `mcp-server --stdio`
 - **HTTP**: `mcp-server --port 8080` (for testing)
 
-More examples in [EXAMPLES.md](EXAMPLES.md#mcp-server---ejemplos-de-integración).
+More examples in [EXAMPLES.md](EXAMPLES.md#mcp-server---integration-examples).
 
 ### HTTP Server (REST API)
 
@@ -326,7 +310,7 @@ package main
 
 import (
 	"log"
-	"github.com/tu-usuario/pdf2img/pkg/converter"
+	"github.com/scopweb/mcp-go-pdf-to-img/pkg/converter"
 )
 
 func main() {
@@ -380,7 +364,7 @@ WebAssembly was chosen over CGO because:
 - **[DEVELOPMENT.md](DEVELOPMENT.md)** - Development guide
 - **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Code structure
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
-- **[MCP_CLAUDE_DESKTOP.md](MCP_CLAUDE_DESKTOP.md)** - Claude Desktop integration
+- **[MCP.md](MCP.md)** - MCP client integration
 - **[MCP_TROUBLESHOOTING.md](MCP_TROUBLESHOOTING.md)** - MCP troubleshooting
 - **[CHANGELOG.md](CHANGELOG.md)** - Change history
 - **[SECURITY.md](SECURITY.md)** - Security policy

@@ -1,144 +1,132 @@
-# 🎉 ¡Bienvenido a pdf2img!
+# 🎉 Welcome to pdf2img!
 
-## ¿Qué es pdf2img?
+## What is pdf2img?
 
-**pdf2img** es una herramienta completa en Go para convertir páginas de PDF a imágenes PNG o JPG. Incluye tanto una **interfaz CLI** como un **servidor MCP** para integración con Claude y otros sistemas.
+**pdf2img** is a complete Go tool for converting PDF pages to PNG or JPG images. It includes both a **CLI interface** and an **MCP server** for integration with your MCP client (for example Cursor, Zed, or Cline) and other systems.
 
-- ✅ **Renderizado de alta calidad** usando go-pdfium (basado en PDFium de Google)
-- 💻 **CLI completa** con múltiples opciones
-- 🔌 **Servidor MCP** para integración con IA
-- 📚 **Documentación exhaustiva**
-- 🚀 **Listo para producción**
+- ✅ **High-quality rendering** using go-pdfium (based on Google's PDFium)
+- 💻 **Complete CLI** with multiple options
+- 🔌 **MCP server** for AI integration
+- 📚 **Exhaustive documentation**
+- 🚀 **Production ready**
 
-## 🚀 Empezar en 5 minutos
+## 🚀 Get started in 5 minutes
 
-### Opción 1: Windows
-```cmd
-install.bat
-pdf2img.exe -i documento.pdf -o .\output
-```
-
-### Opción 2: Linux/macOS
+### Installation
 ```bash
-chmod +x install.sh
-./install.sh
-./pdf2img -i documento.pdf -o ./output
+# Requires Go 1.27+
+go install .
+pdf2img -i document.pdf -o ./output
 ```
 
-### Opción 3: Con Go
-```bash
-go build -o pdf2img ./cmd/pdf2img
-./pdf2img -i documento.pdf -o ./output
-```
+**Done!** Your images are in `./output/`
 
-**¡Listo!** Tus imágenes están en `./output/`
+## 📚 Documentation
 
-## 📚 Documentación
+### Quick start
+- **[QUICKSTART.md](QUICKSTART.md)** - First steps in 5 minutes
 
-### Inicio rápido
-- **[QUICKSTART.md](QUICKSTART.md)** - Primeros pasos en 5 minutos
+### Learn to use it
+- **[README.md](README.md)** - Complete documentation
+- **[EXAMPLES.md](EXAMPLES.md)** - Practical examples
+- **[INDEX.md](INDEX.md)** - Navigation index
 
-### Aprender a usar
-- **[README.md](README.md)** - Documentación completa
-- **[EXAMPLES.md](EXAMPLES.md)** - Ejemplos prácticos
-- **[INDEX.md](INDEX.md)** - Índice de navegación
+### For developers
+- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Project architecture
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Development guide
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
 
-### Para desarrolladores
-- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Arquitectura del proyecto
-- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Guía de desarrollo
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Cómo contribuir
-
-### Referencia
-- **[SUMMARY.md](SUMMARY.md)** - Resumen del proyecto
+### Reference
+- **[SUMMARY.md](SUMMARY.md)** - Project summary
 - **[LICENSE](LICENSE)** - Apache 2.0
 
-## 💡 Ejemplos rápidos
+## 💡 Quick examples
 
-### Convertir todas las páginas
+### Convert all pages
 ```bash
-pdf2img -i documento.pdf -o ./output
+pdf2img -i document.pdf -o ./output
 ```
 
-### Alta resolución (300 DPI)
+### High resolution (300 DPI)
 ```bash
-pdf2img -i documento.pdf -o ./output -d 300
+pdf2img -i document.pdf -o ./output -d 300
 ```
 
-### Formato JPG
+### JPG format
 ```bash
-pdf2img -i documento.pdf -o ./output -f jpg
+pdf2img -i document.pdf -o ./output -f jpg
 ```
 
-### Solo primeras 5 páginas
+### First 5 pages only
 ```bash
-pdf2img -i documento.pdf -o ./output --start 1 --end 5
+pdf2img -i document.pdf -o ./output --start 1 --end 5
 ```
 
-### Información del PDF
+### PDF information
 ```bash
-pdf2img info documento.pdf
+pdf2img info document.pdf
 ```
 
-## 🔌 Usar como servidor MCP
+## 🔌 Use as an MCP server
 
 ```bash
-# Modo HTTP
+# HTTP mode
 mcp-server
 
-# Modo stdio (Claude)
+# stdio mode (your MCP client)
 mcp-server --stdio
 ```
 
-## 🎯 Características principales
+## 🎯 Key features
 
-| Característica | Detalles |
+| Feature | Details |
 |---|---|
-| **Formatos** | PNG, JPG |
-| **DPI** | 72 a 600+ configurable |
-| **Rango de páginas** | Seleccionar rango específico |
-| **CLI** | 10+ flags y opciones |
-| **MCP Server** | HTTP y stdio |
-| **Tests** | Unitarios incluidos |
-| **Licencia** | Apache 2.0 |
-| **Plataformas** | Windows, Linux, macOS |
+| **Formats** | PNG, JPG |
+| **DPI** | 72 to 600+ configurable |
+| **Page range** | Select a specific range |
+| **CLI** | 10+ flags and options |
+| **MCP Server** | HTTP and stdio |
+| **Tests** | Unit tests included |
+| **License** | Apache 2.0 |
+| **Platforms** | Windows, Linux, macOS |
 
-## 🛠️ Tecnologías
+## 🛠️ Technologies
 
-- **Go 1.21+** - Lenguaje de programación
-- **go-pdfium** - Renderización de PDF
-- **Cobra** - Framework CLI
-- **PDFium** - Motor de renderización
+- **Go 1.21+** - Programming language
+- **go-pdfium** - PDF rendering
+- **Cobra** - CLI framework
+- **PDFium** - Rendering engine
 
-## 📞 ¿Necesitas ayuda?
+## 📞 Need help?
 
-### Por donde empezar
-1. Lee [QUICKSTART.md](QUICKSTART.md) si es tu primer uso
-2. Instala con los scripts incluidos
-3. Prueba con tu primer PDF
-4. Explora [EXAMPLES.md](EXAMPLES.md) para más casos
+### Where to start
+1. Read [QUICKSTART.md](QUICKSTART.md) if it's your first use
+2. Install with the included scripts
+3. Try it with your first PDF
+4. Explore [EXAMPLES.md](EXAMPLES.md) for more cases
 
-### Problemas comunes
-- Ver [README.md#solución-de-problemas](README.md#solución-de-problemas)
-- Ver [EXAMPLES.md#solución-de-problemas-comunes](EXAMPLES.md#solución-de-problemas-comunes)
+### Common problems
+- See [README.md#troubleshooting](README.md#troubleshooting)
+- See [EXAMPLES.md#troubleshooting-common-problems](EXAMPLES.md#troubleshooting-common-problems)
 
-### Desarrollo
-- Leer [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
-- Leer [DEVELOPMENT.md](DEVELOPMENT.md)
-- Ejecutar `make test` para verificar
+### Development
+- Read [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+- Read [DEVELOPMENT.md](DEVELOPMENT.md)
+- Run `make test` to verify
 
-### Contribución
-- Ver [CONTRIBUTING.md](CONTRIBUTING.md)
-- Seguir las guías de estilo
-- Crear un PR
+### Contribution
+- See [CONTRIBUTING.md](CONTRIBUTING.md)
+- Follow the style guides
+- Create a PR
 
-## ✨ Lo que hace pdf2img
+## ✨ What pdf2img does
 
-### Antes (PDF)
+### Before (PDF)
 ```
-documento.pdf (25 páginas)
+document.pdf (25 pages)
 ```
 
-### Después (Imágenes)
+### After (Images)
 ```
 page_0001.png
 page_0002.png
@@ -146,92 +134,91 @@ page_0002.png
 page_0025.png
 ```
 
-## 🚀 Casos de uso
+## 🚀 Use cases
 
-✅ **Convertir documentos** a imágenes para almacenamiento
-✅ **Generar miniaturas** para vistas previas
-✅ **Extraer páginas específicas** de un PDF
-✅ **Alta resolución para impresión** con DPI 300+
-✅ **Integración con Claude** via MCP
-✅ **Automatizar procesos** con scripts
+✅ **Convert documents** to images for storage
+✅ **Generate thumbnails** for previews
+✅ **Extract specific pages** from a PDF
+✅ **High resolution for printing** with 300+ DPI
+✅ **Integration with your MCP client** via MCP
+✅ **Automate processes** with scripts
 
-## 📊 Estructura del proyecto
+## 📊 Project structure
 
 ```
 pdf2img/
-├── cmd/pdf2img/           → CLI
-├── cmd/mcp-server/        → Servidor MCP
-├── pkg/converter/         → Lógica compartida
-├── Documentación (8 .md)
-├── Scripts (install.sh/.bat)
-└── Configuración
+├── cmd/pdf2img/            → CLI
+├── cmd/mcp-server/         → MCP server
+├── pkg/converter/          → Shared logic
+├── Documentation (8 .md)
+└── Configuration
 ```
 
-## 🎓 Aprenderás
+## 🎓 What you'll learn
 
-- Cómo usar go-pdfium para renderizar PDFs
-- Cómo crear CLI profesionales con Cobra
-- Cómo implementar servidores MCP
-- Best practices en Go
-- Arquitectura de software limpio
+- How to use go-pdfium to render PDFs
+- How to create professional CLIs with Cobra
+- How to implement MCP servers
+- Best practices in Go
+- Clean software architecture
 
-## 🏆 Destacados
+## 🏆 Highlights
 
-- 📚 **Documentación completa** (8 guías)
-- 🧪 **Tests unitarios** incluidos
-- 🔧 **Scripts de instalación** (Windows + Unix)
-- ✨ **Código limpio** y profesional
-- 🚀 **Listo para producción**
-- 📜 **Licencia libre** (Apache 2.0)
+- 📚 **Complete documentation** (8 guides)
+- 🧪 **Unit tests** included
+- 🔧 **Installation scripts** (Windows + Unix)
+- ✨ **Clean code** and professional
+- 🚀 **Production ready**
+- 📜 **Free license** (Apache 2.0)
 
 ## 📈 Roadmap
 
-- [ ] Soporte para PDF con contraseña
-- [ ] Procesamiento paralelo
-- [ ] OCR de imágenes
-- [ ] Caché de renderizado
-- [ ] Más formatos (WebP, TIFF)
+- [ ] Support for password-protected PDFs
+- [ ] Parallel processing
+- [ ] Image OCR
+- [ ] Rendering cache
+- [ ] More formats (WebP, TIFF)
 
-## 🎯 Próximo paso
+## 🎯 Next step
 
-**¿Listo para empezar?**
+**Ready to start?**
 
-→ [QUICKSTART.md](QUICKSTART.md) (5 minutos)
+→ [QUICKSTART.md](QUICKSTART.md) (5 minutes)
 
-**¿Quieres entender todo?**
+**Want to understand everything?**
 
-→ [INDEX.md](INDEX.md) (Navegación completa)
+→ [INDEX.md](INDEX.md) (Complete navigation)
 
-**¿Quieres el resumen?**
+**Want the summary?**
 
-→ [SUMMARY.md](SUMMARY.md) (Resumen del proyecto)
+→ [SUMMARY.md](SUMMARY.md) (Project summary)
 
 ---
 
-## 📝 Información del proyecto
+## 📝 Project information
 
-| Aspecto | Detalles |
+| Aspect | Details |
 |---|---|
-| **Versión** | 1.0.0 |
-| **Licencia** | Apache 2.0 |
-| **Estado** | Completo y listo |
-| **Plataformas** | Windows, Linux, macOS |
+| **Version** | 1.0.0 |
+| **License** | Apache 2.0 |
+| **Status** | Complete and ready |
+| **Platforms** | Windows, Linux, macOS |
 | **Go version** | 1.21+ |
-| **Dependencias** | go-pdfium, Cobra |
+| **Dependencies** | go-pdfium, Cobra |
 
 ---
 
-## 🎉 ¡Comienza ahora!
+## 🎉 Get started now!
 
-1. **Lee** [QUICKSTART.md](QUICKSTART.md) (5 min)
-2. **Instala** con `./install.sh` o `install.bat`
-3. **Prueba** con `pdf2img -i documento.pdf -o ./output`
-4. **Explora** [EXAMPLES.md](EXAMPLES.md) para más
+1. **Read** [QUICKSTART.md](QUICKSTART.md) (5 min)
+2. **Install** with `go install .`
+3. **Try it** with `pdf2img -i document.pdf -o ./output`
+4. **Explore** [EXAMPLES.md](EXAMPLES.md) for more
 
 ---
 
-**Creado con ❤️ usando Go y PDFium**
+**Created with ❤️ using Go and PDFium**
 
-¡Disfruta convertiendo tus PDFs a imágenes! 📸
+Enjoy converting your PDFs to images! 📸
 
-Preguntas? Ver [INDEX.md](INDEX.md) para navegación completa.
+Questions? See [INDEX.md](INDEX.md) for complete navigation.

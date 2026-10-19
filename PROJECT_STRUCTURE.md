@@ -1,183 +1,180 @@
-# Estructura del Proyecto
+# Project Structure
 
-## Árbol de directorios
+## Directory tree
 
 ```
 pdf2img/
-├── main.go                        # Aplicación CLI (paquete main raíz — `go install .`)
-├── split.go                       # Subcomando `split`
-├── cmd/                           # Aplicaciones ejecutables adicionales
-│     ├── mcp-server/                # Servidor MCP
-│     │     └── main.go               # Servidor HTTP/stdio
-│     └── server/                    # Servidor REST HTTP
-│         ├── main.go
-│         └── handlers.go
-├── internal/                       # Paquetes internos
-│     ├── config/                  # Configuración del servidor
-│     │     └── config.go
-│     └── logging/                 # Utilidades de logging
-│         └── logger.go
-├── mcp/                           # Implementación del protocolo MCP
-│     ├── server.go                 # Servidor MCP
-│     └── example_server.go         # Ejemplo de uso
-├── pkg/                           # Paquetes reutilizables
-│     ├── converter/                # Lógica de conversión
-│     │     ├── converter.go          # Logica principal
-│     │     └── converter_test.go     # Pruebas unitarias
-│     └── splitter/                 # Extracción de páginas
-│         └── splitter.go
-├── go.mod                         # Definición de módulo Go
-├── go.sum                         # Checksums de dependencias (generado)
-├── Makefile                       # Automatización de build
-├── install.sh                     # Script de instalación (Unix)
-├── install.bat                    # Script de instalación (Windows)
-├── .gitignore                     # Archivos a ignorar en Git
-├── LICENSE                        # Licencia Apache 2.0
-├── claude_config.json             # Configuración para Claude
-├── README.md                      # Documentación principal
-├── QUICKSTART.md                  # Guía de inicio rápido
-├── EXAMPLES.md                    # Ejemplos de uso
-├── DEVELOPMENT.md                 # Guía para desarrolladores
-└── PROJECT_STRUCTURE.md           # Este archivo
+├── main.go                         # Application CLI (root main package — `go install .`)
+├── split.go                        # `split` subcommand
+├── cmd/                            # Additional executable applications
+│      ├── mcp-server/                 # MCP server
+│      │      └── main.go                # HTTP/stdio server
+│      └── server/                     # HTTP REST server
+│          ├── main.go
+│          └── handlers.go
+├── internal/                        # Internal packages
+│      ├── config/                   # Server configuration
+│      │      └── config.go
+│      └── logging/                  # Logging utilities
+│          └── logger.go
+├── mcp/                            # MCP protocol implementation
+│      ├── server.go                  # MCP server
+│      └── example_server.go          # Usage example
+├── pkg/                            # Reusable packages
+│      ├── converter/                 # Conversion logic
+│      │      ├── converter.go           # Main logic
+│      │      └── converter_test.go      # Unit tests
+│      └── splitter/                  # Page extraction
+│          └── splitter.go
+├── go.mod                          # Go module definition
+├── go.sum                          # Dependency checksums (generated)
+├── Makefile                         # Build automation
+├── .gitignore                       # Files to ignore in Git
+├── LICENSE                         # Apache 2.0 license
+├── README.md                        # Main documentation
+├── QUICKSTART.md                   # Quick start guide
+├── EXAMPLES.md                     # Usage examples
+├── DEVELOPMENT.md                  # Developer guide
+└── PROJECT_STRUCTURE.md            # This file
 ```
 
-## Descripción de componentes
+## Component description
 
 ### `main.go` / `split.go`
-**Aplicación CLI principal** (paquete `main` en la raíz, instalable con `go install .`)
+**Main CLI application** (the `main` package at the root, installable with `go install .`)
 
-- Interfaz de línea de comandos para convertir PDFs
-- Usa Cobra para manejo de flags
-- Soporta múltiples opciones: DPI, formato, rango de páginas, etc.
-- Comando `info` para obtener metadatos del PDF
+- Command-line interface to convert PDFs
+- Uses Cobra for flag handling
+- Supports multiple options: DPI, format, page range, etc.
+- `info` command to get PDF metadata
 
 ### `cmd/mcp-server/`
-**Servidor MCP (Model Context Protocol)**
+**MCP server (Model Context Protocol)**
 
-- Proporciona dos interfaces:
-  - **HTTP**: API REST en puerto 8080
-  - **stdio**: Para integración con Claude
-- Expone herramientas MCP:
-  - `pdf_to_images`: Convertir PDF a imágenes
-  - `pdf_info`: Obtener información del PDF
+- Provides two interfaces:
+   - **HTTP**: REST API on port 8080
+   - **stdio**: For integration with any MCP client
+- Exposes MCP tools:
+   - `pdf_to_images`: Convert PDF to images
+   - `pdf_info`: Get PDF information
 
 ### `mcp/`
-**Lógica del servidor MCP**
+**MCP server logic**
 
-- `server.go`: Implementación del servidor
-  - `NewMCPServer()`: Crear instancia
-  - `GetTools()`: Listar herramientas disponibles
-  - `ExecuteTool()`: Ejecutar una herramienta
-  - Handlers para cada herramienta
+- `server.go`: Server implementation
+   - `NewMCPServer()`: Create instance
+   - `GetTools()`: List available tools
+   - `ExecuteTool()`: Execute a tool
+   - Handlers for each tool
 
-- `example_server.go`: Ejemplo de uso programático
+- `example_server.go`: Programmatic usage example
 
 ### `pkg/converter/`
-**Lógica compartida de conversión**
+**Shared conversion logic**
 
-- `converter.go`: Módulo principal
-  - `New()`: Inicializar PDFium
-  - `Convert()`: Renderizar PDF a imágenes
-  - `GetPDFInfo()`: Obtener metadatos
-  - Funciones helper para validación y guardado
+- `converter.go`: Main module
+   - `New()`: Initialize PDFium
+   - `Convert()`: Render PDF to images
+   - `GetPDFInfo()`: Get metadata
+   - Helper functions for validation and saving
 
-- `converter_test.go`: Tests unitarios
-  - Validación de opciones
-  - Determinación de rango de páginas
-  - Formateo de tamaño de archivo
+- `converter_test.go`: Unit tests
+   - Options validation
+   - Page range determination
+   - File size formatting
 
-## Flujo de datos
+## Data flow
 
-### Conversión de PDF (CLI)
+### PDF conversion (CLI)
 
 ```
 CLI (main.go)
-  ├─→ Parsear argumentos (Cobra)
-  ├─→ Validar opciones
-  ├─→ Crear Converter
-  ├─→ converter.Convert()
-  │   ├─→ Validar opciones
-  │   ├─→ PDFium.OpenFile()
-  │   ├─→ Para cada página:
-  │   │   ├─→ PDFium.RenderPageInDPI()
-  │   │   └─→ saveImage() (PNG/JPG)
-  │   └─→ Retornar ConvertResult
-  └─→ Mostrar resultados
+   ├─→ Parse arguments (Cobra)
+   ├─→ Validate options
+   ├─→ Create Converter
+   ├─→ converter.Convert()
+   │    ├─→ Validate options
+   │    ├─→ PDFium.OpenFile()
+   │    ├─→ For each page:
+   │    │    ├─→ PDFium.RenderPageInDPI()
+   │    │    └─→ saveImage() (PNG/JPG)
+   │    └─→ Return ConvertResult
+   └─→ Display results
 ```
 
-### Conversión vía MCP
+### Conversion via MCP
 
 ```
-Cliente (HTTP/stdio)
-  ├─→ Enviar JSON {"tool": "pdf_to_images", "input": {...}}
-  ├─→ MCPServer.ExecuteTool()
-  │   ├─→ converter.Convert()
-  │   └─→ Formatear resultado como JSON
-  └─→ Retornar resultado JSON
+Client (HTTP/stdio)
+   ├─→ Send JSON {"tool": "pdf_to_images", "input": {...}}
+   ├─→ MCPServer.ExecuteTool()
+   │    ├─→ converter.Convert()
+   │    └─→ Format result as JSON
+   └─→ Return JSON result
 ```
 
-## Dependencias
+## Dependencies
 
 ```
 github.com/klippa-app/go-pdfium (v1.12.0)
-  └─→ PDFium (C++)
-      └─→ Renderización de PDF
+   └─→ PDFium (C++)
+       └─→ PDF rendering
 
 github.com/spf13/cobra (v1.7.0)
-  └─→ Framework CLI con flags
+   └─→ CLI framework with flags
 ```
 
-## Configuración
+## Configuration
 
-### Variables de entorno
-Actualmente no requiere variables de entorno.
+### Environment variables
+Currently no environment variables are required.
 
-### Archivos de configuración
-- `claude_config.json`: Configuración para integración con Claude
+### Configuration files
+- Integration with MCP clients is configured in your MCP client's configuration file (no files are included in this repository).
 
-## Convenciones
+## Conventions
 
-### Nomenclatura
-- Paquetes: `lowercase` sin underscore
-- Funciones/métodos: `PascalCase` (públicas), `camelCase` (privadas)
-- Constantes: `SCREAMING_SNAKE_CASE`
+### Naming
+- Packages: `lowercase` without underscore
+- Functions/methods: `PascalCase` (public), `camelCase` (private)
+- Constants: `SCREAMING_SNAKE_CASE`
 - Variables: `camelCase`
 
-### Estructura de tests
-- Nombre archivo: `{nombre}_test.go`
-- Nombre función: `Test{FuncionAProbar}`
-- Tabla de casos: `tests := []struct {...}`
+### Test structure
+- File name: `{name}_test.go`
+- Function name: `Test{FunctionToTest}`
+- Case table: `tests := []struct {...}`
 
 ### Error handling
-- Propagar errores con contexto: `fmt.Errorf("acción fallida: %w", err)`
-- No usar `panic()` excepto en inicialización
-- Siempre defer para limpieza: `defer converter.Close()`
+- Propagate errors with context: `fmt.Errorf("action failed: %w", err)`
+- Don't use `panic()` except during initialization
+- Always defer for cleanup: `defer converter.Close()`
 
-## Compilación
+## Compilation
 
-### Compilar CLI
+### Compile the CLI
 ```bash
 go build -o pdf2img .
 ```
 
-### Compilar MCP server
+### Compile the MCP server
 ```bash
 go build -o mcp-server ./cmd/mcp-server
 ```
 
-### Compilación optimizada
+### Optimized compilation
 ```bash
 go build -ldflags "-s -w" -o pdf2img .
 ```
 
 ## Testing
 
-### Ejecutar todos los tests
+### Run all tests
 ```bash
 go test -v ./...
 ```
 
-### Test específico
+### Specific test
 ```bash
 go test -v ./pkg/converter -run TestValidateOptions
 ```
@@ -189,60 +186,60 @@ go test -cover ./...
 
 ## Performance
 
-### Optimizaciones realizadas
-1. **Lazy initialization**: PDFium se inicializa bajo demanda
-2. **Resource cleanup**: `defer` para cerrar archivos y liberar memoria
-3. **Error handling eficiente**: Sin recrear objetos innecesarios
+### Optimizations implemented
+1. **Lazy initialization**: PDFium is initialized on demand
+2. **Resource cleanup**: `defer` to close files and free memory
+3. **Efficient error handling**: Without recreating unnecessary objects
 
-### Posibles mejoras
-1. Procesamiento paralelo de páginas
-2. Caché de imágenes renderizadas
-3. Pool de workers para procesamiento batch
-4. Compresión de imágenes en salida
+### Possible improvements
+1. Parallel page processing
+2. Cache of rendered images
+3. Worker pool for batch processing
+4. Output image compression
 
-## Seguridad
+## Security
 
-### Validaciones
-1. Verificación de archivo de entrada
-2. Validación de formato de salida
-3. Validación de rango de páginas
-4. Creación segura de directorios
+### Validations
+1. Input file verification
+2. Output format validation
+3. Page range validation
+4. Safe directory creation
 
-### Consideraciones
-1. No aceptar rutas absolutas sin validación
-2. Sanitizar nombres de salida
-3. Limitar tamaño máximo de DPI
-4. Proteger contra PDF malintencionados
+### Considerations
+1. Don't accept absolute paths without validation
+2. Sanitize output names
+3. Limit maximum DPI
+4. Protect against malicious PDFs
 
-## Internacionalización (i18n)
-Actualmente sin soporte i18n. Todos los mensajes en inglés/español.
+## Internationalization (i18n)
+Currently no i18n support. All messages in English.
 
-Para futura expansión:
-- Usar `golang.org/x/text/language`
-- Separar strings en archivos de mensajes
-- Traducir automáticamente
+For future expansion:
+- Use `golang.org/x/text/language`
+- Separate strings into message files
+- Translate automatically
 
-## Versionado
-Semántico (MAJOR.MINOR.PATCH):
-- MAJOR: Cambios incompatibles
-- MINOR: Nuevas características
-- PATCH: Correcciones de bugs
+## Versioning
+Semantic (MAJOR.MINOR.PATCH):
+- MAJOR: Incompatible changes
+- MINOR: New features
+- PATCH: Bug fixes
 
-Actualmente: v1.0.0
+Currently: v1.0.0
 
 ## Roadmap
 
 ### v1.1.0
-- [ ] Soporte para PDF con contraseña
-- [ ] Procesamiento paralelo de páginas
-- [ ] Mejor reporte de errores
+- [ ] Support for password-protected PDFs
+- [ ] Parallel page processing
+- [ ] Better error reporting
 
 ### v1.2.0
-- [ ] OCR de imágenes
-- [ ] Caché de renderizado
-- [ ] API HTTP adicional
+- [ ] OCR of images
+- [ ] Rendering cache
+- [ ] Additional HTTP API
 
 ### v2.0.0
-- [ ] Rediseño de arquitectura
-- [ ] Soporte para más formatos (WebP, TIFF)
-- [ ] Base de datos para metadatos
+- [ ] Architecture redesign
+- [ ] Support for more formats (WebP, TIFF)
+- [ ] Database for metadata

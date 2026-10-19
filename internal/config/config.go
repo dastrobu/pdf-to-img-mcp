@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// ConvertConfig contiene configuración para operaciones de conversión.
+// ConvertConfig holds configuration for conversion operations.
 type ConvertConfig struct {
 	DefaultDPI      int
 	DefaultFormat   string
@@ -15,7 +15,7 @@ type ConvertConfig struct {
 	RetryOnFailure  bool
 }
 
-// ServerConfig contiene configuración para el servidor HTTP.
+// ServerConfig holds configuration for the HTTP server.
 type ServerConfig struct {
 	// HTTP server settings
 	Host string
@@ -31,13 +31,13 @@ type ServerConfig struct {
 
 	// Logging
 	LogLevel  string
-	LogFormat string // "text" o "json"
+	LogFormat string // "text" or "json"
 
 	// Conversion operations
 	Convert ConvertConfig
 }
 
-// NewServerConfig crea una configuración del servidor desde variables de entorno.
+// NewServerConfig creates a server configuration from environment variables.
 func NewServerConfig() *ServerConfig {
 	return &ServerConfig{
 		Host:         getEnv("HTTP_HOST", "0.0.0.0"),
