@@ -40,14 +40,14 @@ type ServerConfig struct {
 // NewServerConfig creates a server configuration from environment variables.
 func NewServerConfig() *ServerConfig {
 	return &ServerConfig{
-		Host:         getEnv("HTTP_HOST", "0.0.0.0"),
-		Port:         getEnv("HTTP_PORT", "8080"),
-		ReadTimeout:  getDuration("HTTP_READ_TIMEOUT", 30*time.Second),
-		WriteTimeout: getDuration("HTTP_WRITE_TIMEOUT", 120*time.Second),
-		IdleTimeout:  getDuration("HTTP_IDLE_TIMEOUT", 120*time.Second),
+		Host:          getEnv("HTTP_HOST", "0.0.0.0"),
+		Port:          getEnv("HTTP_PORT", "8080"),
+		ReadTimeout:   getDuration("HTTP_READ_TIMEOUT", 30*time.Second),
+		WriteTimeout:  getDuration("HTTP_WRITE_TIMEOUT", 120*time.Second),
+		IdleTimeout:   getDuration("HTTP_IDLE_TIMEOUT", 120*time.Second),
 		MaxUploadSize: getInt64("HTTP_MAX_UPLOAD_SIZE", 200<<20), // 200MB
-		LogLevel:     getEnv("LOG_LEVEL", "info"),
-		LogFormat:    getEnv("LOG_FORMAT", "text"),
+		LogLevel:      getEnv("LOG_LEVEL", "info"),
+		LogFormat:     getEnv("LOG_FORMAT", "text"),
 		Convert: ConvertConfig{
 			DefaultDPI:      getInt("CONVERT_DEFAULT_DPI", 150),
 			DefaultFormat:   getEnv("CONVERT_DEFAULT_FORMAT", "png"),

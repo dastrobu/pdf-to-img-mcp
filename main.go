@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/spf13/cobra"
 	"github.com/scopweb/mcp-go-pdf-to-img/pkg/converter"
+	"github.com/spf13/cobra"
 )
 
 var (

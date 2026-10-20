@@ -47,23 +47,23 @@ func (h *Handlers) Health(w http.ResponseWriter, r *http.Request) {
 
 // ConvertRequest holds the conversion parameters.
 type ConvertRequest struct {
-	DPI         int    `json:"dpi,omitempty"`
-	Format      string `json:"format,omitempty"`
-	StartPage   int    `json:"start_page,omitempty"`
-	EndPage     int    `json:"end_page,omitempty"`
-	Prefix      string `json:"prefix,omitempty"`
-	RetryFailed bool   `json:"retry_failed,omitempty"`
-	PoolSize    int    `json:"pool_size,omitempty"`
-	RefreshEvery int   `json:"refresh_every,omitempty"`
+	DPI          int    `json:"dpi,omitempty"`
+	Format       string `json:"format,omitempty"`
+	StartPage    int    `json:"start_page,omitempty"`
+	EndPage      int    `json:"end_page,omitempty"`
+	Prefix       string `json:"prefix,omitempty"`
+	RetryFailed  bool   `json:"retry_failed,omitempty"`
+	PoolSize     int    `json:"pool_size,omitempty"`
+	RefreshEvery int    `json:"refresh_every,omitempty"`
 }
 
 // ConvertResponse holds the result of the conversion.
 type ConvertResponse struct {
 	TotalPages   int      `json:"total_pages"`
 	Successful   int      `json:"successful"`
-	Failed        int      `json:"failed"`
-	OutputFiles   []string `json:"output_files,omitempty"`
-	Errors        []string `json:"errors,omitempty"`
+	Failed       int      `json:"failed"`
+	OutputFiles  []string `json:"output_files,omitempty"`
+	Errors       []string `json:"errors,omitempty"`
 	WarningPages []int    `json:"warning_pages,omitempty"`
 }
 

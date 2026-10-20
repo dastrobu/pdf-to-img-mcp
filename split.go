@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/spf13/cobra"
 	"github.com/scopweb/mcp-go-pdf-to-img/pkg/splitter"
+	"github.com/spf13/cobra"
 )
 
 var (

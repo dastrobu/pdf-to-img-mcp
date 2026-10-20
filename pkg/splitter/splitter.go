@@ -21,9 +21,9 @@ type SplitOptions struct {
 
 // SplitResult contains splitting results
 type SplitResult struct {
-	TotalPages int
+	TotalPages     int
 	ExtractedPages int
-	OutputPath string
+	OutputPath     string
 }
 
 // New creates a new Splitter instance

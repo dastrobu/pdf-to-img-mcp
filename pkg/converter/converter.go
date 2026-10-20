@@ -37,11 +37,11 @@ type ConvertOptions struct {
 
 // ConvertResult contains conversion results
 type ConvertResult struct {
-	TotalPages  int
-	Successful  int
-	Failed      int
-	OutputFiles []string
-	Errors      []string
+	TotalPages   int
+	Successful   int
+	Failed       int
+	OutputFiles  []string
+	Errors       []string
 	WarningPages []int // Pages with unreachable errors (may need manual inspection)
 }
 
@@ -142,9 +142,9 @@ func (c *Converter) GetPDFInfo(pdfPath string) (map[string]interface{}, error) {
 	}
 
 	info := map[string]interface{}{
-		"file":       filepath.Base(pdfPath),
-		"pages":      pageCountRes.PageCount,
-		"file_size":  getFileSize(pdfPath),
+		"file":      filepath.Base(pdfPath),
+		"pages":     pageCountRes.PageCount,
+		"file_size": getFileSize(pdfPath),
 	}
 
 	// Try to get first page dimensions
@@ -206,9 +206,9 @@ func (c *Converter) Convert(opts *ConvertOptions) (*ConvertResult, error) {
 	startPage, endPage := determinePageRange(opts.StartPage, opts.EndPage, pageCount)
 
 	result := &ConvertResult{
-		TotalPages:  pageCount,
-		OutputFiles: []string{},
-		Errors:      []string{},
+		TotalPages:   pageCount,
+		OutputFiles:  []string{},
+		Errors:       []string{},
 		WarningPages: []int{},
 	}
 
@@ -234,7 +234,7 @@ func (c *Converter) Convert(opts *ConvertOptions) (*ConvertResult, error) {
 	failedPages := make(map[int]string)
 	pagesProcessed := 0
 
-	_ = poolSize      // Keep the parameter for future use
+	_ = poolSize // Keep the parameter for future use
 
 	// Process pages in chunks to prevent WASM state accumulation
 	// After each chunk, close document and refresh the entire WASM instance
@@ -252,56 +252,56 @@ func (c *Converter) Convert(opts *ConvertOptions) (*ConvertResult, error) {
 
 		// Render pages in this chunk
 		for pageNum := currentPage; pageNum <= chunkEnd; pageNum++ {
-		// Render page to image
-		pageRender, err := c.instance.RenderPageInDPI(&requests.RenderPageInDPI{
-			DPI: int(dpi),
-			Page: requests.Page{
-				ByIndex: &requests.PageByIndex{
-					Document: doc.Document,
-					Index:    pageNum - 1,
+			// Render page to image
+			pageRender, err := c.instance.RenderPageInDPI(&requests.RenderPageInDPI{
+				DPI: int(dpi),
+				Page: requests.Page{
+					ByIndex: &requests.PageByIndex{
+						Document: doc.Document,
+						Index:    pageNum - 1,
+					},
 				},
-			},
-		})
+			})
 
-		if err != nil {
-			result.Failed++
-			failedPages[pageNum] = err.Error()
-			result.Errors = append(result.Errors, fmt.Sprintf("Page %d: %v", pageNum, err))
+			if err != nil {
+				result.Failed++
+				failedPages[pageNum] = err.Error()
+				result.Errors = append(result.Errors, fmt.Sprintf("Page %d: %v", pageNum, err))
 
-			// Mark pages with WASM errors for potential retry
-			if strings.Contains(err.Error(), "unreachable") || strings.Contains(err.Error(), "wasm") {
-				result.WarningPages = append(result.WarningPages, pageNum)
+				// Mark pages with WASM errors for potential retry
+				if strings.Contains(err.Error(), "unreachable") || strings.Contains(err.Error(), "wasm") {
+					result.WarningPages = append(result.WarningPages, pageNum)
+				}
+				continue
 			}
-			continue
-		}
 
-		// Clean up render resources
-		if pageRender != nil {
-			defer pageRender.Cleanup()
-		}
+			// Clean up render resources
+			if pageRender != nil {
+				defer pageRender.Cleanup()
+			}
 
-		// Get the image from result
-		if pageRender == nil || pageRender.Result.Image == nil {
-			result.Failed++
-			result.Errors = append(result.Errors, fmt.Sprintf("Page %d: no image generated", pageNum))
-			continue
-		}
+			// Get the image from result
+			if pageRender == nil || pageRender.Result.Image == nil {
+				result.Failed++
+				result.Errors = append(result.Errors, fmt.Sprintf("Page %d: no image generated", pageNum))
+				continue
+			}
 
-		// Save image
-		outputPath := filepath.Join(
-			opts.OutputDir,
-			fmt.Sprintf("%s%04d.%s", opts.Prefix, pageNum, opts.Format),
-		)
+			// Save image
+			outputPath := filepath.Join(
+				opts.OutputDir,
+				fmt.Sprintf("%s%04d.%s", opts.Prefix, pageNum, opts.Format),
+			)
 
-		if err := saveImage(pageRender.Result.Image, outputPath, opts.Format); err != nil {
-			result.Failed++
-			result.Errors = append(result.Errors, fmt.Sprintf("Page %d save: %v", pageNum, err))
-			continue
-		}
+			if err := saveImage(pageRender.Result.Image, outputPath, opts.Format); err != nil {
+				result.Failed++
+				result.Errors = append(result.Errors, fmt.Sprintf("Page %d save: %v", pageNum, err))
+				continue
+			}
 
-		result.Successful++
-		result.OutputFiles = append(result.OutputFiles, outputPath)
-		pagesProcessed++
+			result.Successful++
+			result.OutputFiles = append(result.OutputFiles, outputPath)
+			pagesProcessed++
 		}
 
 		// After processing chunk, close document and refresh WASM instance to reset state

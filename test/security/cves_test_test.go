@@ -139,7 +139,7 @@ func TestDependencySupplyChainRisk(t *testing.T) {
 	// Check for critical dependencies
 	criticalDeps := map[string]bool{
 		"github.com/klippa-app/go-pdfium": false,
-		"github.com/spf13/cobra":           false,
+		"github.com/spf13/cobra":          false,
 	}
 
 	for dep := range criticalDeps {
@@ -162,10 +162,10 @@ func TestDependencySupplyChainRisk(t *testing.T) {
 // TestSecurityConfigurationBaseline establishes baseline
 func TestSecurityConfigurationBaseline(t *testing.T) {
 	baseline := map[string]bool{
-		"license_check": true,
+		"license_check":    true,
 		"input_validation": true,
-		"error_handling": true,
-		"logging": true,
+		"error_handling":   true,
+		"logging":          true,
 	}
 
 	t.Log("✅ Security baseline configuration verified")
