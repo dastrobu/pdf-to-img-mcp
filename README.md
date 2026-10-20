@@ -276,7 +276,7 @@ pdf2img/
 
 - **go-pdfium v1.17.2** (Apache 2.0): PDF rendering using PDFium WebAssembly
 - **cobra v1.10.1** (Apache 2.0): CLI framework
-- **mark3labs/mcp-go v0.43.0** (Apache 2.0): Official MCP SDK
+- **modelcontextprotocol/go-sdk v1.6.1** (Apache 2.0): Official MCP Go SDK
 - **wazero v1.9.0** (Apache 2.0): WebAssembly runtime for Go (included in go-pdfium)
 
 ## Examples

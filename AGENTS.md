@@ -94,7 +94,7 @@ Configuration is via environment variables, e.g. `HTTP_PORT`, `HTTP_HOST`, `HTTP
 ```
 
 - **CLI** (`main.go`, `split.go`) — `package main`; the root command converts PDFs, with `info` and `split` subcommands (cobra).
-- **`cmd/mcp-server`** — stdio MCP server built on the `mark3labs/mcp-go` SDK; exposes `pdf_to_images` and `pdf_info`.
+- **`cmd/mcp-server`** — stdio MCP server built on the `modelcontextprotocol/go-sdk` (official MCP Go SDK); exposes `pdf_to_images` and `pdf_info`.
 - **`cmd/server`** — HTTP REST server with `GET /health`, `POST /api/v1/pdf/convert`, `POST /api/v1/pdf/info`.
 - **`pkg/converter`** — PDFium rendering via WebAssembly; pages are processed in chunks (default every 50, via `--refresh-every`) so the WASM instance is refreshed to avoid state accumulation on large PDFs.
 - **`pkg/splitter`** — page-range extraction using `pdfcpu`.

@@ -126,7 +126,7 @@ After editing your client's MCP configuration file:
 - The server responds but your MCP client does not accept the responses
 
 **✅ FIXED IN v2.0.0**:
-The server now uses `github.com/mark3labs/mcp-go` (official SDK) that correctly implements JSON-RPC 2.0.
+The server now uses `github.com/modelcontextprotocol/go-sdk` (official MCP Go SDK) that correctly implements JSON-RPC 2.0.
 
 **What changed**:
 ```

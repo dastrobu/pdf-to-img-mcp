@@ -22,7 +22,7 @@ with seamless integration into your MCP client via the Model Context Protocol (M
 
 - Go 1.21+
 - go-pdfium v1.17.2 (WebAssembly-based PDF rendering)
-- mark3labs/mcp-go v0.43.0 (Official MCP SDK)
+- modelcontextprotocol/go-sdk v1.6.1 (Official MCP Go SDK)
 - Cobra CLI framework
 
 ## Quick Links
